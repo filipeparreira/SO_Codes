@@ -3,27 +3,20 @@
 #include <signal.h>
 #include <stdio.h>
 
-int contador = 0;
-
-void headlerSTP(int sig){
-    contador+=1;
-}
-
-void headlerMsg(int s){
-    
-}
-
 int main(int argc, char const *argv[])
 {
-    signal(SIGTSTP, headlerSTP);
     char msg[] = "Mensagem Alerta\n";
-    while(1){
+    signal(SIGALRM, SIG_IGN);
+    int n = 0;
+    while (n<3)
+    {
         write(1, msg, strlen(msg));
-        printf("%i\n", contador);   
-        sleep(1);
-        
+        alarm(6);
+        alarm()
+        n+=1;
     }
-
     
+    
+
     return 0;
 }
