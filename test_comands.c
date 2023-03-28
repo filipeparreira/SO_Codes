@@ -1,19 +1,24 @@
-#include <unistd.h>
-#include <stdint.h>
 #include <stdio.h>
-#include <signal.h>
+#include <stdlib.h>
 
-void strLen(char* msg){
+int main(int argc, char const *argv[])
+{
+    char txt[] = "olá, %s teste\n";
+    char palavra[] = "mundo";
+    int count = 0;
+
+    while(txt[count] != '\0'){
+        if (txt[count] == '%'){
+            printf("%s", palavra);
+            count+=2;
+        }
+        printf("%c", txt[count]);
+        count++;
+    }
     
-    printf("%s");
-}
 
-int main(int argc, char const *argv[]){
-    char msg[] = "Olá, mundo\n";
-    strLen(msg);
 
-    //strLen(msg);
-    //write(1, msg, 13);
-    //printf("%d", size);
+
     return 0;
 }
+
