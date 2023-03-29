@@ -15,6 +15,23 @@ int strtam(char *txt){
     return count;
 }
 
+void teste_tipo(char *txt, char *tipos){
+    int count = 0;
+    int count_pam = 0;
+    while(txt[count] != '\0'){
+        if (txt[count] == '%'){
+            while (txt[count] != ' '){
+                if (txt[count] == 'c' || txt[count] == 'i' || txt[count] == 'f' || txt[count] == 'd' || txt[count] == 's'){
+                    tipos[count_pam] = txt[count];
+                    count_pam++;
+                }
+                count++;
+            }
+        }
+        count++;
+    }
+}
+
 int qtde_parametros(char *txt){
     int count = 0;
     int count_pam = 0;
@@ -56,6 +73,7 @@ void imprimir(char *txt, ...){
     int len_pam = qtde_parametros(txt);
     char letra[1];
     char *complementos[len_pam];
+    char tipos[len_pam];
     
     va_list lista_parametros;
     va_start(lista_parametros, len_pam);
@@ -65,8 +83,10 @@ void imprimir(char *txt, ...){
     }
     va_end(lista_parametros);
 
-    //Verificar se o tipo passado é o correto 
-    //verificaTipo(txt);
+
+    //Obtem todos os tipos passados
+    teste_tipo(txt, tipos);
+    
     
     //Insere uma string no meio do txt
     while (txt[count] != '\0'){
