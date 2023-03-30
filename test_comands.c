@@ -2,6 +2,7 @@
 #include <stdlib.h>
 //#include <unistd.h>
 #include <stdarg.h>
+#include <string.h>
 
 #define typeof(var) _Generic( (var),\
 char: "Char",\
@@ -14,26 +15,20 @@ default: "Undefined")
 
 int main(int argc, char const *argv[])
 {
-    char palavra[] = "Palavra: %.2f ";
+    char palavra[] = "Palavra: %.2f";
     char aux[6];
-    char tipos[4];
+    char tipos[4][6];
     int count = 0;
-    /*
-    aux[0] = palavra[9];
-    aux[1] = palavra[10];
-    aux[2] = palavra[11];
-    aux[3] = palavra[12];
-    aux[4] = palavra[13];
-    aux[5] = '\0';
-    */
+    
     while(palavra[count] != '\0'){
         if (palavra[count] == '%'){
             int count_begin = count;
             while (palavra[count] != ' '){
                 count++;
+                if (palavra[count] == '\0' || palavra[count] == '\n'){
+                    break;
+                }
             }
-            printf("Count begin : %d\n", count_begin);
-            printf("Count: %d\n", count);
             
             int i = 0;
             while (count_begin <= count){
@@ -46,8 +41,8 @@ int main(int argc, char const *argv[])
         }
         count++;
     }
-
-    printf("%s\n", aux);
+    strcpy(tipos[0], aux);
+    printf("%s\n", tipos[0]);
     return 0;
 }
 

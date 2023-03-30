@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include <string.h>
 #define typeof(var) _Generic( (var),\
 char: "Char",\
 int: "Integer",\
@@ -23,21 +24,33 @@ int strtam(char *txt){
     return count;
 }
 
-void teste_tipo(char *txt, char *tipos){
+char** teste_tipo(char *txt, int len_pam){
     int count = 0;
     int count_pam = 0;
+    char** tipos = (char**) malloc(len_pam * sizeof(char*));
     while(txt[count] != '\0'){
         if (txt[count] == '%'){
+            char aux[6];
+            int count_begin = count;
             while (txt[count] != ' '){
-                if (txt[count] == 'c' || txt[count] == 'i' || txt[count] == 'f' || txt[count] == 'd' || txt[count] == 's'){                    
-                    tipos[count_pam] = txt[count];
-                    count_pam++;
-                }
                 count++;
+                if (txt[count] == '\0' || txt[count] == '\n'){
+                    break;
+                }
             }
+            int i = 0;
+            while (count_begin <= count){
+                aux[i] = txt[count_begin];
+                count_begin++;
+                i++;
+            }
+            aux[i+1] = '\0';
+            strcpy(tipos[count_pam], aux);
+            count_pam++;
         }
         count++;
     }
+    return tipos;
 }
 
 int qtde_parametros(char *txt){
@@ -126,11 +139,11 @@ void imprimir(char *txt, ...){
     int len_pam = qtde_parametros(txt);
     char letra[1];
     char *complementos[len_pam];
-    char tipos[len_pam];
+    //char *tipos[len_pam][6];
     
     //Obtem todos os tipos passados
-    teste_tipo(txt, tipos);
-    printf("%c\n", tipos[0]);
+    char** tipos = teste_tipo(txt, len_pam);
+    printf("%s", tipos[0]);
     va_list lista_parametros;
     va_start(lista_parametros, len_pam);
     //for (int i = 0; i < len_pam; i++) {
