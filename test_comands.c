@@ -13,6 +13,52 @@ void *: "Pointer",\
 default: "Undefined")
 
 
+char **teste_tipo(char *txt, char **tipos){
+    int count = 0;
+    int count_pam = 0;
+    char aux[6];
+
+    while(txt[count] != '\0'){
+
+        if (txt[count] == '%'){
+            int count_begin = count;
+            tipos[count_pam] = (char *) malloc(6 * sizeof(char));
+            while (txt[count] != ' '){
+                count++;
+                if (txt[count] == '\0' || txt[count] == '\n'){
+                    break;
+                }
+            }
+            int i = 0;
+            while (count_begin <= count){
+                aux[i] = txt[count_begin];
+                count_begin++;
+                i++;
+            }
+            aux[i+1] = '\0';
+            strncpy(tipos[count_pam], aux, 6);
+            count_pam++;
+            memset(aux, '\0', sizeof(aux));
+        }
+        count++;
+    }
+    return tipos;
+}
+
+int main(int argc, char const *argv[])
+{
+    char palavra[] = "Palavra %.2f %d %i %d %.2f";
+    char **tipos = (char **) malloc(5 * sizeof(char *));
+    tipos = teste_tipo(palavra, tipos);
+    if (strchr(tipos[0], 'f') != NULL){
+        printf("Entrou no if\n");
+    } 
+
+    return 0;
+}
+
+
+/*
 int main(int argc, char const *argv[])
 {
     char palavra[] = "Palavra: %.2f";
@@ -45,7 +91,7 @@ int main(int argc, char const *argv[])
     printf("%s\n", tipos[0]);
     return 0;
 }
-
+*/
 
 /*
 void teste_tipo(char *txt, char *tipos){
