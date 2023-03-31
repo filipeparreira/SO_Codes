@@ -1,6 +1,8 @@
 #include <unistd.h>
 #include <stdarg.h>
 #include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
 
 // Função que desempenha o mesmo proposito da strlen
 int strtam(char *txt){
