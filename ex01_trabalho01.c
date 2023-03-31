@@ -106,46 +106,47 @@ void imprime_char(va_list lista_parametros){
 void imprime_float(va_list lista_parametros, char *tipo){
     double numero = va_arg(lista_parametros, double);
     char str_float[50];
-    int tamanho = snprintf(str_float, sizeof(str_float), tipo, numero);    
+    int tamanho = snprintf(str_float, sizeof(str_float), tipo, numero);
     write(1, str_float, tamanho-1);
 }
 
 //Função printf
 void imprimir(char *txt, ...){
-    //Variaveis locais 
+    //Variaveis locais
     int count = 0;
     int count_comp = 0;
     int len_pam = qtde_parametros(txt);
     char letra[1];
     char *complementos[len_pam];
     char **tipos = (char **) malloc(len_pam * sizeof(char *));
-    
+
     //Obtem todos os tipos passados
     tipos = armazena_tipo(txt, tipos);
     va_list lista_parametros;
     va_start(lista_parametros, len_pam);
-        
+
     //Insere uma string no meio do txt
     while (txt[count] != '\0'){
         if (txt[count] == '%'){
-            //Obtem o tamanho da string do tipo para avançar o contador 
+            //Obtem o tamanho da string do tipo para avançar o contador
             int tam_comp = strtam(tipos[count_comp]) - 1;
             //Verifica no vetor tipos[] qual o tipo do parametro
             if (strchr(tipos[count_comp], 'd') != NULL || strchr(tipos[count_comp], 'i') != NULL){
                 count+=2;
                 imprime_int(lista_parametros);
-            }
-            if (strchr(tipos[count_comp], 's') != NULL){
+            }else if (strchr(tipos[count_comp], 's') != NULL){
                 count+=2;
                 imprime_str(lista_parametros);
-            }
-            if (strchr(tipos[count_comp], 'c') != NULL){
+            }else if (strchr(tipos[count_comp], 'c') != NULL){
                 count+=2;
                 imprime_char(lista_parametros);
-            }
-            if (strchr(tipos[count_comp], 'f') != NULL){
+            }else if (strchr(tipos[count_comp], 'f') != NULL){
                 count += tam_comp;
                 imprime_float(lista_parametros, tipos[count_comp]);
+            }else {
+              char frase_saida[] = "\n\nErro!! Programa encerrado!!\n";
+              write(1, frase_saida, strtam(frase_saida));
+              exit(1);
             }
             count_comp++;
         }
@@ -161,6 +162,6 @@ int main(int argc, char const *argv[])
 {
     imprimir("Numeros sortidos %.3f %d %d %d %d e um caracter %c\n",2.34,2143, 25, 21, 13, 'a');
 
-    imprimir("Char: %.3f\n", 2.34);
+    imprimir("Float: %.3f\n", 2.34);
     return 0;
 }
