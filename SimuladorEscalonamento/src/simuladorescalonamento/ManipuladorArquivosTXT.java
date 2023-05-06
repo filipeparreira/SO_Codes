@@ -26,6 +26,7 @@ public class ManipuladorArquivosTXT {
             if (linha == null){
                 break;
             } else if (!"".equals(linha)){
+                linha = linha.replaceAll("\\s+", "");
                 this.addLinhas(linha);
             }
         }
