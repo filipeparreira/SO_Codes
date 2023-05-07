@@ -29,7 +29,7 @@ import java.util.Comparator;
 public class PrincipalTeste {
     public void iniciar() throws IOException{
         ArrayList<String> linhasArq = new ArrayList<>();
-        String path = "/home/filipe/Documents/GitHub/SO_Codes/SO_Codes/entradaEscalonamento";
+        String path = "/home/filipe/Documents/GitHub/SO_Codes/SO_Codes/entradaRoundRobin";
         String pathSaida = "/home/filipe/Documents/GitHub/SO_Codes/SO_Codes/saidaEscalonamento.txt";
         ManipuladorArquivosTXT manipulador = new ManipuladorArquivosTXT();
         manipulador.leitor(path);
@@ -73,6 +73,7 @@ public class PrincipalTeste {
         Collections.sort(listaProcessos, comparador);
         
         //new FCFS(listaProcessos, pathSaida);
+        new RoundRobin(listaProcessos, 5);
         
     }
     public static void main(String[] args) throws IOException{

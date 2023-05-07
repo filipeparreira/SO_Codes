@@ -16,14 +16,54 @@ public class RoundRobin {
         this.listaEspera = new ArrayList<>();
         this.quantum = quantum;
         this.tempo = 0;
-        Processo processoChegada = new Processo();
-        Processo processoExec = new Processo();
-        while (!this.listaProcessos.isEmpty() && !this.listaEspera.isEmpty()){
-            processoChegada = this.listaProcessos.get(0);
-            if (this.tempo == processoChegada.getChegada()){
-                this.listaEspera.add(processoChegada);
+        int tempoTot = 0;
+        this.executados = new ArrayList<>();
+        Processo processoAtual = new Processo();
+        for (Processo p : this.listaProcessos){
+            tempoTot += p.getTempo();
+        }
+        while(this.tempo <= tempoTot){
+            //Caso a lista de processos não esteja vazia, é verificado se o tempo do primeiro 
+            // elemento da lista é igual ao tempo de chegada, caso ele seja igual, é verificado 
+            // se tem algum processo executando no momento, caso tenha o primeiro processo da lista
+            // de processos vai para lista de espera e é removido da lista de processos, caso não 
+            // tenha um processo executando, ele assume o lugar do processo em execução
+            if (!this.listaProcessos.isEmpty()){
+                if(this.tempo == this.listaProcessos.get(0).getChegada()){
+                    if (processoAtual.getProcesso().equals("")){
+                        processoAtual = this.listaProcessos.get(0);
+                        this.listaProcessos.remove(0);
+                    } else{
+                        this.listaEspera.add(this.listaProcessos.get(0));
+                        this.listaProcessos.remove(0);
+                    }
+                }
             }
             
+            processoAtual.setTempo(processoAtual.getTempo() - 1);
+            
+                
+            
+            if((this.tempo % this.quantum) == 0 && this.tempo != 0){
+                if (processoAtual.getTempo() == 0){
+                    this.executados.add(processoAtual);
+                    processoAtual = new Processo();
+                } else{
+                    this.listaEspera.add(processoAtual);
+                    processoAtual = this.listaEspera.get(0);
+                    this.listaEspera.remove(0);
+                }
+            }
+            
+            this.tempo++;
+        }
+        System.out.println("Lista Espera:");
+        for (Processo p : this.listaEspera){
+            System.out.println(p.getProcesso());
+        }
+        System.out.println("Lista de executado");
+        for (Processo p : this.executados){
+            System.out.println(p.getProcesso());
         }
         
     }
