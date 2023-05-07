@@ -98,4 +98,5 @@ public class Processo {
     public String toString() {
         return "Processo " + this.processo + ", tempo=" + this.tempo + ", chegada=" + this.chegada + ", prioridade=" + this.prioridade;
     }
+    
 }

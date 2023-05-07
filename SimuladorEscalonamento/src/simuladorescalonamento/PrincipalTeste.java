@@ -6,17 +6,25 @@ TaskList:
     DONE 2: Percorrer char por char em cada linha e armazenar as informações dos processos
     DONE 3: Criar a classe processo para atribuir suas informações a cada processo, criando também uma lista dinamica
     TODO 4: Implementar o algoritmo dos escalonadores (Round-Robin e FCFS)
-        TODO 4.1: Implementação FCFS
-            TODO 4.1.1: A classe recebe a lista de processos e executa
+        DONE 4.1: Implementação FCFS
+            DONE 4.1.1: A classe recebe a lista de processos e executa
             O primeiro processo que chega executa até o final, só pra depois o 
             proximo processo ser executado. Apos a execução de um processo, o mesmo
             sai da fila de espera
+        TODO 4.2: Implementação Round-Robin
+            - Recebe a lista de processos executa
+            - Executa somente de acordo com o quantum
+            - Subtrai o quantum do tempo de execução necessario do processo 
     TODO 5: Imprimir a saida em outro arquivo
+        DONE 5.1: Fazer pra FCFS
+        TODO 5.2: Fazer pra Round Robin
     TODO 6: Tentar implementar a interface grafica
 */
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class PrincipalTeste {
     public void iniciar() throws IOException{
@@ -60,7 +68,21 @@ public class PrincipalTeste {
             listaProcessos.add(new Processo(processos[i], tempos[i], chegada[i], prioridade[i]));
         }
         
-        new FCFS(listaProcessos, pathSaida);
+        //Ordenando a lista de processos por chegada
+        Comparator<Processo> comparador = (Processo p1, Processo p2) -> Integer.compare(p1.getChegada(), p2.getChegada());
+        
+        for(Processo p : listaProcessos){
+            System.out.println(p);
+        }
+        
+        Collections.sort(listaProcessos, comparador);
+        
+        System.out.println("Depois de ordenar");
+        for(Processo p : listaProcessos){
+            System.out.println(p);
+        }
+        
+        //new FCFS(listaProcessos, pathSaida);
         
     }
     public static void main(String[] args) throws IOException{
