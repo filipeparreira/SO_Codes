@@ -1,5 +1,6 @@
 package simuladorescalonamento;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class FCFS {
@@ -11,13 +12,16 @@ public class FCFS {
     private float tempoMedioResposta; // todos os tempos de resposta somado / quantidade de processos
     private int tempoExec; // tempo que é acrescentado a cada execução 
     private ArrayList<Processo> executados = new ArrayList<>();
+    private ManipuladorArquivosTXT manipulador;
+    private String path;
     
-    public FCFS(ArrayList<Processo> processos){
+    public FCFS(ArrayList<Processo> processos, String path) throws IOException{
         this.processos = processos;
         this.setQtdeProcessos(processos.size());
         this.setTempoExec(0);
         this.setTempoEspera(0);
         this.setTempoResposta(0);
+        this.setPath(path);
         
         while (!this.processos.isEmpty()){
             //"Pega" um processo da pilha 
@@ -91,44 +95,80 @@ public class FCFS {
     private void setTempoMedioEspera(float tempoMedioEspera){
         this.tempoMedioEspera = tempoMedioEspera;
     }
+    private String getPath() {
+        return path;
+    }
+    private void setPath(String path) {
+        this.path = path;
+    }
     
-    private void imprimir(){
-        System.out.print("Processos na Fila do First Come First Served:");
-        for (Processo processo : executados){
-            System.out.print("\t" + processo.getProcesso());
-        }
-        System.out.println("\n\nTempo de CPU requerida pelos processos:");
-        for (Processo processo : executados){
-            System.out.print("\t" + processo.getTempo());
-        }
-        System.out.println("\n\nTempo de Chegada dos processos:");
-        for (Processo processo : executados){
-            System.out.print("\t" + processo.getChegada());
-        }
-        System.out.println("\n\nLINHA DO TEMPO\n");
-        System.out.print("[0]");
-        for (Processo processo : executados){
-            System.out.printf("-----%s-----[%d]", processo.getProcesso(), 
-                    processo.getTempoFinal());
-        }
-        System.out.println("\n\nTempo de Espera de cada processo:");
-        for (Processo processo : executados){
-            System.out.print("\t" + processo.getProcesso());
-        }
-        System.out.println("");
-        for (Processo processo : executados){
-            System.out.print("\t" + processo.getTempoEspera());
-        }
-        System.out.println("\n\nTempo de Resposta de cada processo:");
-        for (Processo processo : executados){
-            System.out.print("\t" + processo.getProcesso());
-        }
-        System.out.println("");
-        for (Processo processo : executados){
-            System.out.print("\t" + processo.getTempoResposta());
-        }
+    
+    
+    private void imprimir() throws IOException{
+        String linha = "";
+        ArrayList<String> linhas = new ArrayList<>();
         
-        System.out.println("\n\nTempo Médio de Resposta: " + this.getTempoMedioResposta());
-        System.out.println("\n\nTempo Médio de Espera: " + this.getTempoMedioEspera());
+        linhas.add("Processos na Fila do First Come First Served:\n");
+        for (Processo processo : executados){
+            //System.out.print("\t" + processo.getProcesso());
+            linha = linha + "  " + processo.getProcesso();
+        }
+        linhas.add(linha);
+        linha = "";
+        linhas.add("\n\nTempo de CPU requerida pelos processos:\n");
+        for (Processo processo : executados){
+            //System.out.print("\t" + processo.getTempo());
+            linha = linha + "\t" + processo.getTempo();
+        }
+        linhas.add(linha);
+        linha = "";
+        linhas.add("\n\nTempo de Chegada dos processos:\n");
+        for (Processo processo : executados){
+            //System.out.print("\t" + processo.getChegada());
+            linha = linha + "\t" + processo.getChegada();
+        }
+        linhas.add(linha);
+        linha = "";
+        linhas.add("\n\nLINHA DO TEMPO\n[0]");
+        for (Processo processo : executados){
+            //System.out.printf("-----%s-----[%d]", processo.getProcesso(), 
+              //      processo.getTempoFinal());
+            linha = linha + "-----" + processo.getProcesso() + "-----[" + processo.getTempoFinal() + "]";
+        }
+        linhas.add(linha);
+        linha = "";
+        linhas.add("\n\nTempo de Espera de cada processo:\n");
+        for (Processo processo : executados){
+            //System.out.print("\t" + processo.getProcesso());
+            linha = linha + "\t" + processo.getProcesso();
+        }
+        linha = linha + "\n";
+        linhas.add(linha);
+        linha = "";
+        for (Processo processo : executados){
+            //System.out.print("\t" + processo.getTempoEspera());
+            linha = linha + "\t" + processo.getTempoEspera();
+        }
+        linhas.add(linha);
+        linha = "";
+        linhas.add("\n\nTempo de Resposta de cada processo:\n");
+        for (Processo processo : executados){
+            //System.out.print("\t" + processo.getProcesso());
+            linha = linha + "\t" + processo.getProcesso();
+        }
+        linha = linha + "\n";
+        linhas.add(linha);
+        linha = "";
+        for (Processo processo : executados){
+            //System.out.print("\t" + processo.getTempoResposta());
+            linha = linha + "\t" + processo.getTempoResposta();
+        }
+        linhas.add(linha);
+        linha = "\n\nTempo Médio de Resposta: " + this.getTempoMedioResposta();
+        linhas.add(linha);
+        linha = "\n\nTempo Médio de Espera: " + this.getTempoMedioEspera();
+        linhas.add(linha);
+        this.manipulador = new ManipuladorArquivosTXT(linhas);
+        this.manipulador.escritor(this.getPath());
     }
 }

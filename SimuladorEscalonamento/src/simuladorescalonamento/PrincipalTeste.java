@@ -22,6 +22,7 @@ public class PrincipalTeste {
     public void iniciar() throws IOException{
         ArrayList<String> linhasArq = new ArrayList<>();
         String path = "/home/filipe/Documents/GitHub/SO_Codes/SO_Codes/entradaEscalonamento";
+        String pathSaida = "/home/filipe/Documents/GitHub/SO_Codes/SO_Codes/saidaEscalonamento.txt";
         ManipuladorArquivosTXT manipulador = new ManipuladorArquivosTXT();
         manipulador.leitor(path);
         linhasArq = manipulador.getLinhas();
@@ -59,7 +60,8 @@ public class PrincipalTeste {
             listaProcessos.add(new Processo(processos[i], tempos[i], chegada[i], prioridade[i]));
         }
         
-        new FCFS(listaProcessos);
+        new FCFS(listaProcessos, pathSaida);
+        
     }
     public static void main(String[] args) throws IOException{
         PrincipalTeste p = new PrincipalTeste();
