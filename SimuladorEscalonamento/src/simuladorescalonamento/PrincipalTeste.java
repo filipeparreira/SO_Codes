@@ -6,6 +6,11 @@ TaskList:
     DONE 2: Percorrer char por char em cada linha e armazenar as informações dos processos
     DONE 3: Criar a classe processo para atribuir suas informações a cada processo, criando também uma lista dinamica
     TODO 4: Implementar o algoritmo dos escalonadores (Round-Robin e FCFS)
+        TODO 4.1: Implementação FCFS
+            TODO 4.1.1: A classe recebe a lista de processos e executa
+            O primeiro processo que chega executa até o final, só pra depois o 
+            proximo processo ser executado. Apos a execução de um processo, o mesmo
+            sai da fila de espera
     TODO 5: Imprimir a saida em outro arquivo
     TODO 6: Tentar implementar a interface grafica
 */
@@ -40,7 +45,6 @@ public class PrincipalTeste {
             for(int i = 1; i<tamanho; i++){
                 if (linha[0].equalsIgnoreCase("Processo")){
                     processos[i-1] = linha[i];
-                    System.out.println(linha[i]);
                 } else if (linha[0].equalsIgnoreCase("Tempo")){
                     tempos[i-1] = Integer.valueOf(linha[i]);
                 } else if (linha[0].equalsIgnoreCase("Chegada")){
@@ -54,9 +58,8 @@ public class PrincipalTeste {
         for (int i = 0; i < tamanho - 1; i++){
             listaProcessos.add(new Processo(processos[i], tempos[i], chegada[i], prioridade[i]));
         }
-        for (Processo p : listaProcessos){
-            System.out.println(p);
-        }
+        
+        new FCFS(listaProcessos);
     }
     public static void main(String[] args) throws IOException{
         PrincipalTeste p = new PrincipalTeste();

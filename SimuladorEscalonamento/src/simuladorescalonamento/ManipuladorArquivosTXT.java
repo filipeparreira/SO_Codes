@@ -8,7 +8,7 @@ public class ManipuladorArquivosTXT {
     private ArrayList<String> linhas;
     
     public ManipuladorArquivosTXT(){
-        this.linhas = new ArrayList<String>();
+        this.linhas = new ArrayList<>();
     }
     
     public void addLinhas(String linha){
