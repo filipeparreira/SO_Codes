@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class RoundRobin {
     private ArrayList<Processo> listaProcessos; //Lista de todos os processos, recebe como parametro
     private ArrayList<Processo> listaEspera; //Lista dos processos que estão em espera, adiciona os processos de acordo com a "chegada"
+    private ArrayList<Processo> executados; //Lista de processos que foram executados
     private int quantum; //quantum do sistema
     private String linha;
     private ArrayList<String> linhas;
@@ -15,10 +16,12 @@ public class RoundRobin {
         this.listaEspera = new ArrayList<>();
         this.quantum = quantum;
         this.tempo = 0;
-        Processo processoAtual = this.listaProcessos.get(0);
+        Processo processoChegada = new Processo();
+        Processo processoExec = new Processo();
         while (!this.listaProcessos.isEmpty() && !this.listaEspera.isEmpty()){
-            for (int i = 0; i < this.quantum; i++){
-                
+            processoChegada = this.listaProcessos.get(0);
+            if (this.tempo == processoChegada.getChegada()){
+                this.listaEspera.add(processoChegada);
             }
             
         }

@@ -70,17 +70,7 @@ public class PrincipalTeste {
         
         //Ordenando a lista de processos por chegada
         Comparator<Processo> comparador = (Processo p1, Processo p2) -> Integer.compare(p1.getChegada(), p2.getChegada());
-        
-        for(Processo p : listaProcessos){
-            System.out.println(p);
-        }
-        
         Collections.sort(listaProcessos, comparador);
-        
-        System.out.println("Depois de ordenar");
-        for(Processo p : listaProcessos){
-            System.out.println(p);
-        }
         
         //new FCFS(listaProcessos, pathSaida);
         
