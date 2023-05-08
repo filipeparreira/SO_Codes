@@ -1,0 +1,23 @@
+Processos na Fila do First Come First Served:
+  A  B  C  D
+
+Tempo de CPU requerida pelos processos:
+	8	5	6	7
+
+Tempo de Chegada dos processos:
+	0	4	9	14
+
+LINHA DO TEMPO
+[0]-----A-----[8]-----B-----[13]-----C-----[19]-----D-----[26]
+
+Tempo de Espera de cada processo:
+	A	B	C	D
+	0	4	4	5
+
+Tempo de Resposta de cada processo:
+	A	B	C	D
+	8	9	10	12
+
+Tempo Médio de Resposta: 9.75
+
+Tempo Médio de Espera: 3.25

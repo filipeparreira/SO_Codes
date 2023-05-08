@@ -30,7 +30,8 @@ public class PrincipalTeste {
     public void iniciar() throws IOException{
         ArrayList<String> linhasArq = new ArrayList<>();
         String path = "/home/filipe/Documents/GitHub/SO_Codes/SO_Codes/entradaRoundRobin";
-        String pathSaida = "/home/filipe/Documents/GitHub/SO_Codes/SO_Codes/saidaEscalonamento.txt";
+        String pathSaidaRR = "/home/filipe/Documents/GitHub/SO_Codes/SO_Codes/saidaRoundRobin";
+        String pathSaidaFCFS = "/home/filipe/Documents/GitHub/SO_Codes/SO_Codes/saidaFCFS";
         ManipuladorArquivosTXT manipulador = new ManipuladorArquivosTXT();
         manipulador.leitor(path);
         linhasArq = manipulador.getLinhas();
@@ -72,8 +73,8 @@ public class PrincipalTeste {
         Comparator<Processo> comparador = (Processo p1, Processo p2) -> Integer.compare(p1.getChegada(), p2.getChegada());
         Collections.sort(listaProcessos, comparador);
         
-        //new FCFS(listaProcessos, pathSaida);
-        new RoundRobin(listaProcessos, 5);
+        new FCFS((ArrayList<Processo>) listaProcessos.clone(), pathSaidaFCFS);
+        new RoundRobin((ArrayList<Processo>) listaProcessos.clone(), 5, pathSaidaRR);
         
     }
     public static void main(String[] args) throws IOException{

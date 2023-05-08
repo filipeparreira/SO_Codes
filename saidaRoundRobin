@@ -1,0 +1,23 @@
+Processos na Fila do Round-Robin:
+  A  B  C  D
+
+Tempo de CPU requerida pelos processos:
+	8	5	6	7
+
+Tempo de Chegada dos processos:
+	0	4	9	14
+
+LINHA DO TEMPO
+[0]-----[A]-----[5]-----[B]-----[10]---[A]---[13]-----[C]-----[18]-----[D]-----[23]-[C]-[24]--[D]--[26]
+
+Tempo de Espera de cada processo:
+	A	B	C	D
+	5	1	9	5
+
+Tempo de Resposta de cada processo:
+	A	B	C	D
+	13	6	15	12
+
+Tempo Médio de Resposta: 11.5
+
+Tempo Médio de Espera: 5.0
