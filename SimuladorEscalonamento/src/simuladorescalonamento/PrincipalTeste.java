@@ -15,9 +15,9 @@ TaskList:
             - Recebe a lista de processos executa
             - Executa somente de acordo com o quantum
             - Subtrai o quantum do tempo de execução necessario do processo 
-    TODO 5: Imprimir a saida em outro arquivo
+    DONE 5: Imprimir a saida em outro arquivo
         DONE 5.1: Fazer pra FCFS
-        TODO 5.2: Fazer pra Round Robin
+        DONE 5.2: Fazer pra Round Robin
     TODO 6: Tentar implementar a interface grafica
 */
 
@@ -74,7 +74,7 @@ public class PrincipalTeste {
         Collections.sort(listaProcessos, comparador);
         
         new FCFS((ArrayList<Processo>) listaProcessos.clone(), pathSaidaFCFS);
-        new RoundRobin((ArrayList<Processo>) listaProcessos.clone(), 5, pathSaidaRR);
+        //new RoundRobin((ArrayList<Processo>) listaProcessos.clone(), 5, pathSaidaRR);
         
     }
     public static void main(String[] args) throws IOException{

@@ -16,13 +16,47 @@ public class FCFS {
     private String path;
     
     public FCFS(ArrayList<Processo> processos, String path) throws IOException{
-        this.processos = processos;
+        this.processos = (ArrayList<Processo>) processos.clone();
         this.setQtdeProcessos(processos.size());
         this.setTempoExec(0);
         this.setTempoEspera(0);
         this.setTempoResposta(0);
         this.setPath(path);
+        int tempoTot = 0;
+        int tempo = 0;
+        ArrayList<Processo> listaEspera = new ArrayList<>();
+        Processo processoAtual = new Processo();
         
+        for (Processo p : processos){
+            tempoTot += p.getTempo();
+        }
+        
+        while (tempo <= tempoTot){
+            if(!processos.isEmpty()){
+                if(tempo == processos.get(0).getChegada()){
+                    if(processoAtual.getProcesso().equals("")){
+                        processoAtual = processos.get(0);
+                        processos.remove(0);
+                    } else{
+                        listaEspera.add(processos.get(0));
+                        processos.remove(0);
+                    }
+                }
+            }
+            if (processoAtual.getTempo() == 0){
+                this.executados.add(processoAtual);
+                if (listaEspera.isEmpty()){
+                    processoAtual = new Processo();
+                }else {
+                    processoAtual = listaEspera.get(0);
+                    listaEspera.remove(0);
+                }
+            }
+            processoAtual.setTempo(processoAtual.getTempo() - 1);
+            tempo++;
+        }
+        
+        /*
         while (!this.processos.isEmpty()){
             //"Pega" um processo da pilha 
             Processo processoAtual = processos.get(0);
@@ -45,7 +79,12 @@ public class FCFS {
         }
         this.setTempoMedioEspera((float) this.getTempoEspera() / this.getQtdeProcessos());
         this.setTempoMedioResposta((float) this.getTempoResposta() / this.getQtdeProcessos());
-        this.imprimir();
+        //this.imprimir();
+        */
+        System.out.println("Lista Executados: ");
+        for (Processo p : this.executados){
+            System.out.println(p.getProcesso());
+        }
     }
     private void executa(Processo processoAtual){
         processoAtual.setTempoComeco(this.getTempoExec());
