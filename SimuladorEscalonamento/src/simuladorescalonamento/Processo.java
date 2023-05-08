@@ -9,6 +9,7 @@ public class Processo {
     private int tempoEspera;
     private int tempoComeco;
     private int tempoFinal;
+    private int tempoAux;
 
     public Processo() {
         this.processo = "";
@@ -27,6 +28,7 @@ public class Processo {
         this.tempo = tempo;
         this.tempoEspera = 0;
         this.tempoResposta = 0;
+        this.tempoAux = tempo;
     }
 
     public String getProcesso() {
@@ -92,6 +94,15 @@ public class Processo {
     public void setTempoFinal(int tempoFinal) {
         this.tempoFinal = tempoFinal;
     }
+
+    public int getTempoAux() {
+        return tempoAux;
+    }
+
+    public void setTempoAux(int tempoAux) {
+        this.tempoAux = tempoAux;
+    }
+    
     
     
     @Override

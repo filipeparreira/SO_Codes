@@ -5,13 +5,13 @@ TaskList:
     DONE 1: Ler o arquivo de entrada e armazenar suas linhas em um vetor de strings
     DONE 2: Percorrer char por char em cada linha e armazenar as informações dos processos
     DONE 3: Criar a classe processo para atribuir suas informações a cada processo, criando também uma lista dinamica
-    TODO 4: Implementar o algoritmo dos escalonadores (Round-Robin e FCFS)
+    DONE 4: Implementar o algoritmo dos escalonadores (Round-Robin e FCFS)
         DONE 4.1: Implementação FCFS
             DONE 4.1.1: A classe recebe a lista de processos e executa
             O primeiro processo que chega executa até o final, só pra depois o 
             proximo processo ser executado. Apos a execução de um processo, o mesmo
             sai da fila de espera
-        TODO 4.2: Implementação Round-Robin
+        DONE 4.2: Implementação Round-Robin
             - Recebe a lista de processos executa
             - Executa somente de acordo com o quantum
             - Subtrai o quantum do tempo de execução necessario do processo 

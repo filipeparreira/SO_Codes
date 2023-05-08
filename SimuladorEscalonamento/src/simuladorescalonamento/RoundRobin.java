@@ -38,14 +38,16 @@ public class RoundRobin {
             }
             
             
-            if(auxQuantum == this.quantum && this.tempo != 0 || processoAtual.getTempo() == 0){
+            if(auxQuantum == this.quantum && this.tempo != 0 || processoAtual.getTempoAux() == 0){
                 String tracos = "";
                 for (int i = 0; i < auxQuantum; i++){
                     tracos = tracos + "-";
                 }
                 this.linha = this.linha + tracos + "[" + processoAtual.getProcesso() + "]" + tracos + "[" + this.tempo + "]";
-                auxQuantum = 0;
-                if (processoAtual.getTempo() == 0){
+                
+                if (processoAtual.getTempoAux() == 0){
+                    processoAtual.setTempoResposta(this.tempo-processoAtual.getChegada());
+                    processoAtual.setTempoEspera(processoAtual.getTempoResposta() - processoAtual.getTempo());
                     this.executados.add(processoAtual);
                     if (this.listaEspera.isEmpty()){
                         processoAtual = new Processo();
@@ -59,9 +61,10 @@ public class RoundRobin {
                     processoAtual = this.listaEspera.get(0);
                     this.listaEspera.remove(0);
                 }
+                auxQuantum = 0;
             }
             
-            processoAtual.setTempo(processoAtual.getTempo() - 1);
+            processoAtual.setTempoAux(processoAtual.getTempoAux() - 1);
             
             this.tempo++;
             auxQuantum++;
@@ -76,9 +79,27 @@ public class RoundRobin {
         }
         System.out.println("Linha do tempo\n\n");
         System.out.println(this.linha);
+        System.out.println("\nTME: " + this.setTempoMedioEspera(this.executados));
+        System.out.println("\nTMR: " + this.setTempoMedioResposta(this.executados));
     }
     
+    private float setTempoMedioResposta(ArrayList<Processo> executados){
+        float tmr = 0f;
+        for (Processo p : executados){
+            tmr += p.getTempoResposta();
+        }
+        return tmr / executados.size();
+    }
+    private float setTempoMedioEspera(ArrayList<Processo> executados){
+        float tme = 0f;
+        for (Processo p : executados){
+            tme += p.getTempoEspera();
+        }
+        return tme / executados.size();
+    }
     
-    
+    private void imprimir(){
+        
+    }
     
 }
