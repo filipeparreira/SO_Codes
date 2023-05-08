@@ -29,7 +29,7 @@ import java.util.Comparator;
 public class PrincipalTeste {
     public void iniciar() throws IOException{
         ArrayList<String> linhasArq = new ArrayList<>();
-        String path = "/home/filipe/Documents/GitHub/SO_Codes/SO_Codes/entradaRoundRobin";
+        String path = "/home/filipe/Documents/GitHub/SO_Codes/SO_Codes/entradaEscalonamento";
         String pathSaidaRR = "/home/filipe/Documents/GitHub/SO_Codes/SO_Codes/saidaRoundRobin";
         String pathSaidaFCFS = "/home/filipe/Documents/GitHub/SO_Codes/SO_Codes/saidaFCFS";
         ManipuladorArquivosTXT manipulador = new ManipuladorArquivosTXT();
