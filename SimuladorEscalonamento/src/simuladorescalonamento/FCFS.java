@@ -52,6 +52,13 @@ public class FCFS {
         
         this.imprimir(this.setTempoMedioResposta(executados), this.setTempoMedioEspera(executados), executados);
     }
+    
+    
+    public FCFS(ArrayList<Processo> processos){
+        
+    }
+    
+    
     private float setTempoMedioResposta(ArrayList<Processo> executados){
         float tmr = 0;
         

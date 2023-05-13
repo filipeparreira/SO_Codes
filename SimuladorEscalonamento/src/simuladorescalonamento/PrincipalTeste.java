@@ -19,6 +19,11 @@ TaskList:
         DONE 5.1: Fazer pra FCFS
         DONE 5.2: Fazer pra Round Robin
     TODO 6: Tentar implementar a interface grafica
+        DONE 6.1: Implementar uma escolha (Tipo de algoritmo de escalonamento; e se vai ser via arquivo ou será preenchido 
+                    na interface
+        DONE 6.2: Implementar um seletor de arquivos, onde será selecionado o local onde está o arquivo de entrada, e 
+                    selecionar o local onde será colocado o arquivo de saida 
+        TODO 6.3: Implementar a parte onde é selecionado a opção de preencher os processos na interface
 */
 
 import java.io.IOException;
@@ -73,8 +78,8 @@ public class PrincipalTeste {
         Comparator<Processo> comparador = (Processo p1, Processo p2) -> Integer.compare(p1.getChegada(), p2.getChegada());
         Collections.sort(listaProcessos, comparador);
         
-        new FCFS((ArrayList<Processo>) listaProcessos.clone(), pathSaidaFCFS);
-        //new RoundRobin((ArrayList<Processo>) listaProcessos.clone(), 5, pathSaidaRR);
+        //new FCFS((ArrayList<Processo>) listaProcessos.clone(), pathSaidaFCFS);
+        new RoundRobin((ArrayList<Processo>) listaProcessos.clone(), 0, pathSaidaRR);
         
     }
     public static void main(String[] args) throws IOException{
