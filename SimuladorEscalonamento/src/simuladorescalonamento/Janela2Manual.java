@@ -36,7 +36,6 @@ public class Janela2Manual extends javax.swing.JFrame {
         btnProx = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(747, 515));
         setResizable(false);
 
         txtTItulo.setFont(new java.awt.Font("Noto Sans Mono", 0, 18)); // NOI18N
@@ -47,7 +46,9 @@ public class Janela2Manual extends javax.swing.JFrame {
         jLabel2.setText("Quantidade de Processo: ");
 
         txtQtdeProc.setFont(new java.awt.Font("Noto Sans Mono", 0, 15)); // NOI18N
-        txtQtdeProc.setModel(new javax.swing.SpinnerNumberModel(0, 0, 20, 1));
+        txtQtdeProc.setModel(new javax.swing.SpinnerNumberModel(2, 2, 20, 1));
+        txtQtdeProc.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        txtQtdeProc.setEditor(new javax.swing.JSpinner.NumberEditor(txtQtdeProc, ""));
 
         btnProx.setFont(new java.awt.Font("Noto Sans Mono", 0, 15)); // NOI18N
         btnProx.setText("Próximo");
@@ -107,7 +108,16 @@ public class Janela2Manual extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnProxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProxActionPerformed
-        
+        int qtdeProcessos = Integer.parseInt(this.txtQtdeProc.getValue().toString());
+        if (tipo == 0){
+            this.dispose();
+            Janela3Manual jm = new Janela3Manual(this.tipo, qtdeProcessos);
+            jm.setVisible(true);
+        } else {
+            this.dispose();
+            Janela3Manual jm = new Janela3Manual(this.tipo, this.quantum, qtdeProcessos);
+            jm.setVisible(true);
+        }
     }//GEN-LAST:event_btnProxActionPerformed
 
     /**

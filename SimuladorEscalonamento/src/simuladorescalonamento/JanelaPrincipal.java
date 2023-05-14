@@ -342,8 +342,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
             }else{
                 Janela2Manual jm = new Janela2Manual(this.tipo, this.quantum);
                 jm.setVisible(true);
-            }
-            
+            }            
         }
     }//GEN-LAST:event_btnProxActionPerformed
 
