@@ -19,6 +19,11 @@ TaskList:
         DONE 5.1: Fazer pra FCFS
         DONE 5.2: Fazer pra Round Robin
     TODO 6: Tentar implementar a interface grafica
+        DONE 6.1: Implementar uma escolha (Tipo de algoritmo de escalonamento; e se vai ser via arquivo ou será preenchido 
+                    na interface
+        DONE 6.2: Implementar um seletor de arquivos, onde será selecionado o local onde está o arquivo de entrada, e 
+                    selecionar o local onde será colocado o arquivo de saida 
+        TODO 6.3: Implementar a parte onde é selecionado a opção de preencher os processos na interface
 */
 
 import java.io.IOException;
@@ -73,9 +78,42 @@ public class PrincipalTeste {
         Comparator<Processo> comparador = (Processo p1, Processo p2) -> Integer.compare(p1.getChegada(), p2.getChegada());
         Collections.sort(listaProcessos, comparador);
         
-        new FCFS((ArrayList<Processo>) listaProcessos.clone(), pathSaidaFCFS);
-        //new RoundRobin((ArrayList<Processo>) listaProcessos.clone(), 5, pathSaidaRR);
+        //new FCFS((ArrayList<Processo>) listaProcessos.clone(), pathSaidaFCFS);
+        //FCFS escalonador = new FCFS((ArrayList<Processo>) listaProcessos.clone());
         
+        //FCFS escalonador = new FCFS((ArrayList<Processo>) listaProcessos.clone());
+        //new RoundRobin((ArrayList<Processo>) listaProcessos.clone(), 0, pathSaidaRR);
+        //new RoundRobin((ArrayList<Processo>) listaProcessos.clone(), 5);
+        RoundRobin escalonador = new RoundRobin((ArrayList<Processo>) listaProcessos.clone(), 5);
+        ArrayList<Processo> listaEspera = new ArrayList<>();
+        ArrayList<Processo> processoAtual = new ArrayList<>();
+       
+        
+        
+        for(int i = 0; i<5; i++){
+            ArrayList<ArrayList<Processo>> lista = escalonador.executar(2);
+            listaEspera = lista.get(1);
+            processoAtual = lista.get(3);
+            Processo processoA = processoAtual.get(0);
+            ArrayList<Processo> executados = lista.get(2);
+            ArrayList<Processo> pLista = lista.get(0);
+            System.out.print("\nProcesso Atual: " + processoA.getProcesso());
+            System.out.print("\nLista Espera: ");
+            for(Processo p : listaEspera){
+                System.out.print(p.getProcesso() + " ");
+            }
+            System.out.print("\nLista Executados: ");
+            for(Processo p : executados){
+                System.out.print(p.getProcesso() + " ");
+            }
+            System.out.print("\nLista de Processos: ");
+            for (Processo p : pLista){
+                System.out.print(p.getProcesso() + " ");
+            }
+            System.out.println("");
+        }
+        
+               
     }
     public static void main(String[] args) throws IOException{
         PrincipalTeste p = new PrincipalTeste();

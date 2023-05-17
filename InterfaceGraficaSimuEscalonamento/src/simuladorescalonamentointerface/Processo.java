@@ -1,4 +1,4 @@
-package simuladorescalonamento;
+package simuladorescalonamentointerface;
 
 public class Processo {
     private String processo;

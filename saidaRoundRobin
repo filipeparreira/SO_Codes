@@ -1,23 +1,23 @@
 Processos na Fila do Round-Robin:
-  A  B  C  D
+  A  B  C  D  E  F  G  H  I  J
 
 Tempo de CPU requerida pelos processos:
-	8	5	6	7
+	10	11	12	13	14	15	16	17	18	19
 
 Tempo de Chegada dos processos:
-	0	4	9	14
+	0	1	2	3	4	5	6	7	8	9
 
 LINHA DO TEMPO
-[0]-----[A]-----[5]-----[B]-----[10]---[A]---[13]-----[C]-----[18]-----[D]-----[23]-[C]-[24]--[D]--[26]
+[0]----------[A]----------[10]-----------[B]-----------[21]------------[C]------------[33]-------------[D]-------------[46]--------------[E]--------------[60]---------------[F]---------------[75]----------------[G]----------------[91]-----------------[H]-----------------[108]------------------[I]------------------[126]-------------------[J]-------------------[145]
 
 Tempo de Espera de cada processo:
-	A	B	C	D
-	5	1	9	5
+	A	B	C	D	E	F	G	H	I	J
+	0	9	19	30	42	55	69	84	100	117
 
 Tempo de Resposta de cada processo:
-	A	B	C	D
-	13	6	15	12
+	A	B	C	D	E	F	G	H	I	J
+	10	20	31	43	56	70	85	101	118	136
 
-Tempo Médio de Resposta: 11.5
+Tempo Médio de Resposta: 67.0
 
-Tempo Médio de Espera: 5.0
+Tempo Médio de Espera: 52.5
