@@ -1,4 +1,7 @@
-package simuladorescalonamento;
+package simuladorescalonamentointerface;
+
+import javax.swing.JComponent;
+import javax.swing.JSpinner.DefaultEditor;
 
 /**
  *
@@ -9,16 +12,28 @@ public class Janela2Manual extends javax.swing.JFrame {
     private int quantum;
     public Janela2Manual(){
         initComponents();
+        JComponent editor = this.txtQtdeProc.getEditor();
+        if (editor instanceof DefaultEditor defaultEditor) {
+            defaultEditor.getTextField().setEditable(false);
+        }
         this.painelP.setBackground(java.awt.SystemColor.window);
     }
     public Janela2Manual(int tipo) {
         initComponents();
+        JComponent editor = this.txtQtdeProc.getEditor();
+        if (editor instanceof DefaultEditor defaultEditor) {
+            defaultEditor.getTextField().setEditable(false);
+        }
         this.painelP.setBackground(java.awt.SystemColor.window);
         this.tipo = tipo;
         this.txtTItulo.setText("Algoritmo First Come-First Served");
     }
     public Janela2Manual(int tipo, int quantum){
         initComponents();
+        JComponent editor = this.txtQtdeProc.getEditor();
+        if (editor instanceof DefaultEditor defaultEditor) {
+            defaultEditor.getTextField().setEditable(false);
+        }
         this.painelP.setBackground(java.awt.SystemColor.window);
         this.tipo = tipo;
         this.quantum = quantum;
@@ -49,6 +64,7 @@ public class Janela2Manual extends javax.swing.JFrame {
         txtQtdeProc.setModel(new javax.swing.SpinnerNumberModel(2, 2, 20, 1));
         txtQtdeProc.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         txtQtdeProc.setEditor(new javax.swing.JSpinner.NumberEditor(txtQtdeProc, ""));
+        txtQtdeProc.setFocusable(false);
 
         btnProx.setFont(new java.awt.Font("Noto Sans Mono", 0, 15)); // NOI18N
         btnProx.setText("Próximo");
@@ -145,6 +161,7 @@ public class Janela2Manual extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Janela2Manual.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

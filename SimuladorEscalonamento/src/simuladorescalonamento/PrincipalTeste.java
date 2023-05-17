@@ -79,8 +79,41 @@ public class PrincipalTeste {
         Collections.sort(listaProcessos, comparador);
         
         //new FCFS((ArrayList<Processo>) listaProcessos.clone(), pathSaidaFCFS);
-        new RoundRobin((ArrayList<Processo>) listaProcessos.clone(), 0, pathSaidaRR);
+        //FCFS escalonador = new FCFS((ArrayList<Processo>) listaProcessos.clone());
         
+        //FCFS escalonador = new FCFS((ArrayList<Processo>) listaProcessos.clone());
+        //new RoundRobin((ArrayList<Processo>) listaProcessos.clone(), 0, pathSaidaRR);
+        //new RoundRobin((ArrayList<Processo>) listaProcessos.clone(), 5);
+        RoundRobin escalonador = new RoundRobin((ArrayList<Processo>) listaProcessos.clone(), 5);
+        ArrayList<Processo> listaEspera = new ArrayList<>();
+        ArrayList<Processo> processoAtual = new ArrayList<>();
+       
+        
+        
+        for(int i = 0; i<5; i++){
+            ArrayList<ArrayList<Processo>> lista = escalonador.executar(2);
+            listaEspera = lista.get(1);
+            processoAtual = lista.get(3);
+            Processo processoA = processoAtual.get(0);
+            ArrayList<Processo> executados = lista.get(2);
+            ArrayList<Processo> pLista = lista.get(0);
+            System.out.print("\nProcesso Atual: " + processoA.getProcesso());
+            System.out.print("\nLista Espera: ");
+            for(Processo p : listaEspera){
+                System.out.print(p.getProcesso() + " ");
+            }
+            System.out.print("\nLista Executados: ");
+            for(Processo p : executados){
+                System.out.print(p.getProcesso() + " ");
+            }
+            System.out.print("\nLista de Processos: ");
+            for (Processo p : pLista){
+                System.out.print(p.getProcesso() + " ");
+            }
+            System.out.println("");
+        }
+        
+               
     }
     public static void main(String[] args) throws IOException{
         PrincipalTeste p = new PrincipalTeste();

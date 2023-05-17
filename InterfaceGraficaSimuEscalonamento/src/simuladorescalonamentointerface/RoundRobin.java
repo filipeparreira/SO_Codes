@@ -1,4 +1,4 @@
-package simuladorescalonamento;
+package simuladorescalonamentointerface;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,8 +15,9 @@ public class RoundRobin {
     int tempoTotM;
     int auxQuantumM;
     int quantumM;
-    Processo processoAtualM;
     int passoAux;
+    int qtdeProcessos; 
+    Processo processoAtualM;
     Processo processoAux;
     
     public RoundRobin(ArrayList<Processo> listaProcessos, int quantum, String path) throws IOException{
@@ -26,26 +27,29 @@ public class RoundRobin {
         int tempo = 0;
         int tempoTot = 0;
         int auxQuantum = 0;
+        qtdeProcessos = 0;
         Processo processoAtual = new Processo();
         this.setPath(path);
         
         for (Processo p : listaProcessos){
             tempoTot += p.getTempo();
+            qtdeProcessos++;
         }
         
         while(tempo <= tempoTot){
-            if (!listaProcessos.isEmpty()){
-                if(tempo == listaProcessos.get(0).getChegada()){
-                    if (processoAtual.getProcesso().equals("")){
-                        processoAtual = listaProcessos.get(0);
-                        listaProcessos.remove(0);
-                    } else{
-                        listaEspera.add(listaProcessos.get(0));
-                        listaProcessos.remove(0);
+            for (int i = 0; i < qtdeProcessos; i++){
+                if (!listaProcessos.isEmpty()){
+                    if(tempo == listaProcessos.get(0).getChegada()){
+                        if (processoAtual.getProcesso().equals("")){
+                            processoAtual = listaProcessos.get(0);
+                            listaProcessos.remove(0);
+                        } else{
+                            listaEspera.add(listaProcessos.get(0));
+                            listaProcessos.remove(0);
+                        }
                     }
                 }
             }
-            
             
             if(auxQuantum == quantum && tempo != 0 || processoAtual.getTempoAux() == 0){
                 
@@ -89,8 +93,10 @@ public class RoundRobin {
         passoAux = 0;
         processoAtualM = new Processo();
         processoAux = new Processo();
+        qtdeProcessos = 0;
         for (Processo p : processosM){
             tempoTotM += p.getTempo();
+            qtdeProcessos++;
         }
     }
     
@@ -98,14 +104,16 @@ public class RoundRobin {
         ArrayList<ArrayList<Processo>> retorno = new ArrayList<>();
         ArrayList<Processo> pAtual = new ArrayList<>();
         while(tempoM <= tempoTotM){
-            if (!processosM.isEmpty()){
-                if(tempoM == processosM.get(0).getChegada()){
-                    if (processoAtualM.getProcesso().equals("")){
-                        processoAtualM = processosM.get(0);
-                        processosM.remove(0);
-                    } else{
-                        listaEsperaM.add(processosM.get(0));
-                        processosM.remove(0);
+            for (int i = 0; i < qtdeProcessos; i++){
+                if (!processosM.isEmpty()){
+                    if(tempoM == processosM.get(0).getChegada()){
+                        if (processoAtualM.getProcesso().equals("")){
+                            processoAtualM = processosM.get(0);
+                            processosM.remove(0);
+                        } else{
+                            listaEsperaM.add(processosM.get(0));
+                            processosM.remove(0);
+                        }
                     }
                 }
             }

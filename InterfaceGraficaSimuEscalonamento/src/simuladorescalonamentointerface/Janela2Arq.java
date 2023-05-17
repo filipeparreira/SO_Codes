@@ -1,4 +1,4 @@
-package simuladorescalonamento;
+package simuladorescalonamentointerface;
 
 import java.io.File;
 import java.io.IOException;
@@ -253,6 +253,8 @@ public class Janela2Arq extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Janela2Arq.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 

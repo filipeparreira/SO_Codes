@@ -1,4 +1,4 @@
-package simuladorescalonamento;
+package simuladorescalonamentointerface;
 
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -119,7 +119,7 @@ public class Janela3Manual extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Processos", "Tempo", "Chegada", "Prioridade"
+                "Processo", "Tempo", "Chegada", "Prioridade"
             }
         ) {
             Class[] types = new Class [] {
@@ -294,7 +294,7 @@ public class Janela3Manual extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPrioridadeActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        
+        txtNome.requestFocus();
         if (this.countP < this.qtdProcessos && this.validadarDados()){
             String nome = this.txtNome.getText().toUpperCase();
             int tempo = Integer.parseInt(this.txtTempo.getText());
@@ -325,8 +325,15 @@ public class Janela3Manual extends javax.swing.JFrame {
 
     private void btnProxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProxActionPerformed
         this.dispose();
-        Janela4Manual jm = new Janela4Manual();
-        jm.setVisible(true);
+        //Lista de processos, tipo, quatum (caso rr)
+        if (this.tipo == 0){
+            Janela4Manual jm = new Janela4Manual(this.listaProcessos, this.tipo);
+            jm.setVisible(true);
+        } else{
+            Janela4Manual jm = new Janela4Manual(this.listaProcessos, this.tipo, this.quantum);
+            jm.setVisible(true);
+        }
+        
     }//GEN-LAST:event_btnProxActionPerformed
     
     public boolean validadarDados(){
@@ -393,6 +400,7 @@ public class Janela3Manual extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Janela3Manual.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

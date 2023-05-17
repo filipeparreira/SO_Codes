@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package simuladorescalonamento;
+package simuladorescalonamentointerface;
 
 import java.io.File;
 import javax.swing.JFileChooser;
@@ -83,6 +83,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         setResizable(false);
         setSize(new java.awt.Dimension(747, 515));
 
+        painel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         painel1.setPreferredSize(new java.awt.Dimension(747, 515));
 
         jLabel1.setFont(new java.awt.Font("Noto Sans Mono", 0, 16)); // NOI18N
@@ -371,6 +372,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(JanelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

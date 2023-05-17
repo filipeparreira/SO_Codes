@@ -1,8 +1,7 @@
-package simuladorescalonamento;
+package simuladorescalonamentointerface;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class FCFS {
     private ManipuladorArquivosTXT manipulador;
@@ -10,6 +9,7 @@ public class FCFS {
     int tempoTotM;
     int tempoM;
     int passoAux;
+    int qtdeProcessos;
     ArrayList<Processo> listaEsperaM;
     Processo processoAtualM;
     ArrayList<Processo> executadosM;
@@ -21,25 +21,29 @@ public class FCFS {
         this.setPath(path);
         int tempoTot = 0;
         int tempo = 0;
+        qtdeProcessos = 0;
         ArrayList<Processo> listaEspera = new ArrayList<>();
         Processo processoAtual = new Processo();
         ArrayList<Processo> executados = new ArrayList<>();
         
         for (Processo p : processos){
             tempoTot += p.getTempo();
+            qtdeProcessos++;
         }
         
         while (tempo <= tempoTot){
-            if(!processos.isEmpty()){
-                if(tempo == processos.get(0).getChegada()){
-                    if(processoAtual.getProcesso().equals("")){
-                        processoAtual = processos.get(0);
-                        processoAtual.setTempoComeco(tempo);
-                        processos.remove(0);
-                        processoAtual.setTempoEspera(tempo - processoAtual.getChegada());
-                    } else{
-                        listaEspera.add(processos.get(0));
-                        processos.remove(0);
+            for (int i = 0; i < qtdeProcessos; i++){
+                if(!processos.isEmpty()){
+                    if(tempo == processos.get(0).getChegada()){
+                        if(processoAtual.getProcesso().equals("")){
+                            processoAtual = processos.get(0);
+                            processoAtual.setTempoComeco(tempo);
+                            processos.remove(0);
+                            processoAtual.setTempoEspera(tempo - processoAtual.getChegada());
+                        } else{
+                            listaEspera.add(processos.get(0));
+                            processos.remove(0);
+                        }
                     }
                 }
             }
@@ -71,8 +75,10 @@ public class FCFS {
         processoAtualM = new Processo();
         executadosM = new ArrayList<>();  
         processosM = processos;
+        qtdeProcessos = 0;
         for (Processo p : processosM){
             tempoTotM += p.getTempo();
+            qtdeProcessos++;
         }
         passoAux = 0;
         processoAux = new Processo();
@@ -83,16 +89,18 @@ public class FCFS {
         ArrayList<ArrayList<Processo>> retorno = new ArrayList<>();
         ArrayList<Processo> pAtual = new ArrayList<>();
         while (tempoM <= tempoTotM){
-            if(!processosM.isEmpty()){
-                if(tempoM == processosM.get(0).getChegada()){
-                    if(processoAtualM.getProcesso().equals("")){
-                        processoAtualM = processosM.get(0);
-                        processoAtualM.setTempoComeco(tempoM);
-                        processosM.remove(0);
-                        processoAtualM.setTempoEspera(tempoM - processoAtualM.getChegada());
-                    } else{
-                        listaEsperaM.add(processosM.get(0));
-                        processosM.remove(0);
+            for (int i = 0; i<qtdeProcessos; i++){
+                if(!processosM.isEmpty()){
+                    if(tempoM == processosM.get(0).getChegada()){
+                        if(processoAtualM.getProcesso().equals("")){
+                            processoAtualM = processosM.get(0);
+                            processoAtualM.setTempoComeco(tempoM);
+                            processosM.remove(0);
+                            processoAtualM.setTempoEspera(tempoM - processoAtualM.getChegada());
+                        } else{
+                            listaEsperaM.add(processosM.get(0));
+                            processosM.remove(0);
+                        }
                     }
                 }
             }
