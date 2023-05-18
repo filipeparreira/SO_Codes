@@ -81,20 +81,22 @@ public class PrincipalTeste {
         //new FCFS((ArrayList<Processo>) listaProcessos.clone(), pathSaidaFCFS);
         //FCFS escalonador = new FCFS((ArrayList<Processo>) listaProcessos.clone());
         
-        //FCFS escalonador = new FCFS((ArrayList<Processo>) listaProcessos.clone());
+        FCFS escalonador = new FCFS((ArrayList<Processo>) listaProcessos.clone());
         //new RoundRobin((ArrayList<Processo>) listaProcessos.clone(), 0, pathSaidaRR);
         //new RoundRobin((ArrayList<Processo>) listaProcessos.clone(), 5);
-        RoundRobin escalonador = new RoundRobin((ArrayList<Processo>) listaProcessos.clone(), 5);
+        //RoundRobin escalonador = new RoundRobin((ArrayList<Processo>) listaProcessos.clone(), 5);
         ArrayList<Processo> listaEspera = new ArrayList<>();
         ArrayList<Processo> processoAtual = new ArrayList<>();
        
         
         
         for(int i = 0; i<5; i++){
-            ArrayList<ArrayList<Processo>> lista = escalonador.executar(2);
+            ArrayList<ArrayList<Processo>> lista = escalonador.executar(5);
             listaEspera = lista.get(1);
             processoAtual = lista.get(3);
             Processo processoA = processoAtual.get(0);
+            System.out.println("ProcessoA: " + processoA.getTempoAux());
+            System.out.println("Tamanho processoAtual: " + processoAtual.size());
             ArrayList<Processo> executados = lista.get(2);
             ArrayList<Processo> pLista = lista.get(0);
             System.out.print("\nProcesso Atual: " + processoA.getProcesso());

@@ -112,6 +112,7 @@ public class Janela3Manual extends javax.swing.JFrame {
         btnProx = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         tabelaIn.setFont(new java.awt.Font("Noto Sans Mono", 0, 14)); // NOI18N
         tabelaIn.setModel(new javax.swing.table.DefaultTableModel(

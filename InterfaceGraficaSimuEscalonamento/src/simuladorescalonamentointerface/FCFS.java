@@ -48,16 +48,18 @@ public class FCFS {
                 }
             }
             if (processoAtual.getTempoAux() == 0){
-                processoAtual.setTempoResposta(tempo - processoAtual.getChegada());
-                processoAtual.setTempoFinal(tempo);
-                executados.add(processoAtual);
-                if (listaEspera.isEmpty()){
-                    processoAtual = new Processo();
-                }else {
-                    processoAtual = listaEspera.get(0);
-                    processoAtual.setTempoComeco(tempo);
-                    processoAtual.setTempoEspera(tempo - processoAtual.getChegada());
-                    listaEspera.remove(0);
+                if (!processoAtual.getProcesso().equalsIgnoreCase("")){
+                    processoAtual.setTempoResposta(tempo - processoAtual.getChegada());
+                    processoAtual.setTempoFinal(tempo);
+                    executados.add(processoAtual);
+                    if (listaEspera.isEmpty()){
+                        processoAtual = new Processo();
+                    }else {
+                        processoAtual = listaEspera.get(0);
+                        processoAtual.setTempoComeco(tempo);
+                        processoAtual.setTempoEspera(tempo - processoAtual.getChegada());
+                        listaEspera.remove(0);
+                    }
                 }
             }
             processoAtual.setTempoAux(processoAtual.getTempoAux() - 1);
@@ -105,17 +107,19 @@ public class FCFS {
                 }
             }
             if (processoAtualM.getTempoAux() == 0){
-                this.addLinhaTempo(processoAtualM, tempoM);
-                processoAtualM.setTempoResposta(tempoM - processoAtualM.getChegada());
-                processoAtualM.setTempoFinal(tempoM);
-                executadosM.add(processoAtualM);
-                if (listaEsperaM.isEmpty()){
-                    processoAtualM = new Processo();
-                }else {
-                    processoAtualM = listaEsperaM.get(0);
-                    processoAtualM.setTempoComeco(tempoM);
-                    processoAtualM.setTempoEspera(tempoM - processoAtualM.getChegada());
-                    listaEsperaM.remove(0);
+                if(!processoAtualM.getProcesso().equalsIgnoreCase("")){
+                    this.addLinhaTempo(processoAtualM, tempoM);
+                    processoAtualM.setTempoResposta(tempoM - processoAtualM.getChegada());
+                    processoAtualM.setTempoFinal(tempoM);
+                    executadosM.add(processoAtualM);
+                    if (listaEsperaM.isEmpty()){
+                        processoAtualM = new Processo();
+                    }else {
+                        processoAtualM = listaEsperaM.get(0);
+                        processoAtualM.setTempoComeco(tempoM);
+                        processoAtualM.setTempoEspera(tempoM - processoAtualM.getChegada());
+                        listaEsperaM.remove(0);
+                    }
                 }
             }
             
@@ -134,7 +138,14 @@ public class FCFS {
         processoAux.setTmr(this.setTempoMedioResposta(executadosM));
         processoAux.setProcesso("[0]" + this.linhaTempo);
         pAtual.add(processoAux);
-        if(processoAtualM.getTempoAux() != -1){
+        /*if(processoAtualM.getTempoAux() != -1){
+            pAtual.add(processoAtualM);
+        } else if(pAtual.size() == 1){
+            pAtual.add(new Processo());
+        }*/
+        if (processoAtualM.getProcesso().equalsIgnoreCase("")){
+            pAtual.add(new Processo());
+        } else {
             pAtual.add(processoAtualM);
         }
         retorno.add(processosM);
