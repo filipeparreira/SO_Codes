@@ -11,15 +11,16 @@ public class RoundRobin {
     ArrayList<Processo> listaEsperaM;
     ArrayList<Processo> executadosM;
     ArrayList<Processo> processosM;
+    Processo processoAtualM;
+    Processo processoAux;
     int tempoM;
     int tempoTotM;
     int auxQuantumM;
     int quantumM;
     int passoAux;
     int qtdeProcessos; 
-    Processo processoAtualM;
-    Processo processoAux;
     
+    //Caso seja execução por arquivo 
     public RoundRobin(ArrayList<Processo> listaProcessos, int quantum, String path) throws IOException{
         this.setListaProcessosCopy((ArrayList<Processo>) listaProcessos.clone());
         ArrayList<Processo> listaEspera = new ArrayList<>();
@@ -30,13 +31,16 @@ public class RoundRobin {
         qtdeProcessos = 0;
         Processo processoAtual = new Processo();
         this.setPath(path);
-        
+
+        //Soma o tempo de execução de todos os processos 
         for (Processo p : listaProcessos){
             tempoTot += p.getTempo();
             qtdeProcessos++;
         }
         
         while(tempo <= tempoTot){
+            //Identifica se o processoAtual é vazio / armazena processos na lista
+            //  de espera
             for (int i = 0; i < qtdeProcessos; i++){
                 if (!listaProcessos.isEmpty()){
                     if(tempo == listaProcessos.get(0).getChegada()){
@@ -51,10 +55,10 @@ public class RoundRobin {
                 }
             }
             
+            //Quando um processo termina a execução ou o tempo é igual ao quantum 
+            // troca o processo atual pelo primeiro processo da lista de espera
             if(auxQuantum == quantum && tempo != 0 || processoAtual.getTempoAux() == 0){
-                
                 this.addLinhaTempo(processoAtual, tempo, auxQuantum);
-                
                 if (processoAtual.getTempoAux() == 0){
                     processoAtual.setTempoResposta(tempo-processoAtual.getChegada());
                     processoAtual.setTempoEspera(processoAtual.getTempoResposta() - processoAtual.getTempo());
@@ -65,7 +69,6 @@ public class RoundRobin {
                         processoAtual = listaEspera.get(0);
                         listaEspera.remove(0);
                     }
-                        
                 } else{
                     listaEspera.add(processoAtual);
                     processoAtual = listaEspera.get(0);
@@ -73,15 +76,14 @@ public class RoundRobin {
                 }
                 auxQuantum = 0;
             }
-            
             processoAtual.setTempoAux(processoAtual.getTempoAux() - 1);
-            
             tempo++;
             auxQuantum++;
         }
         this.imprimir(this.setTempoMedioResposta(executados), this.setTempoMedioEspera(executados));
     }
     
+    //Construtor execução manual
     public RoundRobin(ArrayList<Processo> listaProcessos, int quantum){
         this.setListaProcessosCopy((ArrayList<Processo>) listaProcessos.clone());
         processosM = listaProcessos;
@@ -100,6 +102,7 @@ public class RoundRobin {
         }
     }
     
+    //Método execução manual
     public ArrayList<ArrayList<Processo>> executar(int passo){
         ArrayList<ArrayList<Processo>> retorno = new ArrayList<>();
         ArrayList<Processo> pAtual = new ArrayList<>();

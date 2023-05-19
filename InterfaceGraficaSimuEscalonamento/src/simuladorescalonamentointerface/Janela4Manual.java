@@ -10,45 +10,31 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
 public class Janela4Manual extends javax.swing.JFrame {
-    private ArrayList<Processo> listaProcessos;
     private int tipo; 
-    private int quantum;
     private int passo;
     private FCFS escalonadorFCFS;
     private RoundRobin escalonadorRR;
-    
+    private ArrayList<Processo> listaProcessos;
     
     public Janela4Manual() {
         initComponents();
-        painelP.setBackground(java.awt.SystemColor.window);
-        this.alinharTabela();
-        ArrayList<Processo> listaProc = new ArrayList<>();
-        listaProc.add(new Processo("A", 12, 0, 0));
-        listaProc.add(new Processo("B", 15, 1, 0));
-        listaProc.add(new Processo("C", 17, 2, 0));
-        escalonadorFCFS = new FCFS(listaProc);
-        this.sliderPasso.setValue(1);
-        Processo primeiroProcesso = listaProc.get(0);
-        this.tabelaExecucao.setValueAt(primeiroProcesso.getProcesso(), 0, 0);
-        this.tabelaExecucao.setValueAt(primeiroProcesso.getTempoAux(), 0, 1);
-        this.tabelaExecucao.setValueAt(primeiroProcesso.getChegada(), 0, 2);
-        for (int i = 0; i < listaProc.size(); i++){
-            Processo p = listaProc.get(i);
-            this.tabelaProcessos.setValueAt(p.getProcesso(), i, 0);
-            this.tabelaProcessos.setValueAt(p.getTempoAux(), i, 1);
-            this.tabelaProcessos.setValueAt(p.getChegada(), i, 2);
-        }
-        this.tipo = 0;
     }
+    
+    //Caso FCFS
     public Janela4Manual(ArrayList<Processo> listaProcessos, int tipo) {
         initComponents();
         painelP.setBackground(java.awt.SystemColor.window);
+        this.sliderPasso.setValue(1);
+        this.lblTitulo.setText("Algoritmo First Come-First Served");
         
         this.listaProcessos = listaProcessos;
         this.tipo = tipo;
         this.alinharTabela();
+        
+        //Ordenando os processos por ordem de chegada e armazenando na tabela
         Comparator<Processo> comparador = (Processo p1, Processo p2) -> Integer.compare(p1.getChegada(), p2.getChegada());
         Collections.sort(this.listaProcessos, comparador);
+        
         Processo primeiroProcesso = listaProcessos.get(0);
         this.tabelaExecucao.setValueAt(primeiroProcesso.getProcesso(), 0, 0);
         this.tabelaExecucao.setValueAt(primeiroProcesso.getTempoAux(), 0, 1);
@@ -59,19 +45,24 @@ public class Janela4Manual extends javax.swing.JFrame {
             this.tabelaProcessos.setValueAt(p.getTempoAux(), i, 1);
             this.tabelaProcessos.setValueAt(p.getChegada(), i, 2);
         }
+        
         escalonadorFCFS = new FCFS(this.listaProcessos);
-        this.sliderPasso.setValue(1);
-        this.lblTitulo.setText("Algoritmo First Come-First Served");
     }
+    //Caso RR
     public Janela4Manual(ArrayList<Processo> listaProcessos, int tipo, int quantum) {
         initComponents();
         painelP.setBackground(java.awt.SystemColor.window);
+        this.sliderPasso.setValue(1);
+        this.lblTitulo.setText("Algoritmo Round-Robin");
+        
         this.listaProcessos = listaProcessos;
         this.tipo = tipo;
-        this.quantum = quantum;
         this.alinharTabela();
+        
+        //Ordenando os processos por ordem de chegada e armazenando na tabela
         Comparator<Processo> comparador = (Processo p1, Processo p2) -> Integer.compare(p1.getChegada(), p2.getChegada());
         Collections.sort(this.listaProcessos, comparador);        
+        
         Processo primeiroProcesso = listaProcessos.get(0);
         this.tabelaExecucao.setValueAt(primeiroProcesso.getProcesso(), 0, 0);
         this.tabelaExecucao.setValueAt(primeiroProcesso.getTempoAux(), 0, 1);
@@ -83,8 +74,6 @@ public class Janela4Manual extends javax.swing.JFrame {
             this.tabelaProcessos.setValueAt(p.getChegada(), i, 2);
         }
         escalonadorRR = new RoundRobin(this.listaProcessos, quantum);
-        this.sliderPasso.setValue(1);
-        this.lblTitulo.setText("Algoritmo Round-Robin");
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -158,9 +147,16 @@ public class Janela4Manual extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         jScrollPane2.setViewportView(tabelaProcessos);
@@ -173,7 +169,15 @@ public class Janela4Manual extends javax.swing.JFrame {
             new String [] {
                 "Processo", "Execução", "Chegada"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tabelaExecucao);
 
         tabelaExecutados.setFont(new java.awt.Font("Noto Sans Mono", 0, 14)); // NOI18N
@@ -207,9 +211,16 @@ public class Janela4Manual extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         jScrollPane3.setViewportView(tabelaExecutados);
@@ -245,9 +256,16 @@ public class Janela4Manual extends javax.swing.JFrame {
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.Integer.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         jScrollPane4.setViewportView(tabelaEspera);
@@ -454,8 +472,8 @@ public class Janela4Manual extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    //Cada vez que o usuario apertar o botão, será realizado a execução a partir da quantidade de passos informada
     private void btnPaPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPaPActionPerformed
-        
         if (this.tipo == 0){
             ArrayList<ArrayList<Processo>> lista = escalonadorFCFS.executar(this.passo);
             //Lista espera --> 1 | Executados -> 2 | Processos -> 0 | Processo Atual -> 3 | Linha Tempo -> 4
@@ -467,7 +485,7 @@ public class Janela4Manual extends javax.swing.JFrame {
             } else {
                 this.atualizarDados(listaEspera, processoAtual, listaExecutados);
                 JOptionPane.showMessageDialog(this, "Processo Finalizado!!");
-                this.btnFinalizar.setText("Sair");
+                this.btnFinalizar.setText("Próximo");
             }
         } else if (tipo == 1){
             ArrayList<ArrayList<Processo>> lista = escalonadorRR.executar(this.passo);
@@ -481,8 +499,8 @@ public class Janela4Manual extends javax.swing.JFrame {
                 this.atualizarDados(listaEspera, processoAtual, listaExecutados);
             } else {
                 this.atualizarDados(listaEspera, processoAtual, listaExecutados);
-                JOptionPane.showMessageDialog(this, "Processo Finalizado!!");
-                this.btnFinalizar.setText("Sair");
+                JOptionPane.showMessageDialog(this, "Processos Finalizados!!");
+                this.btnFinalizar.setText("Próximo");
             }
         } 
     }//GEN-LAST:event_btnPaPActionPerformed
@@ -493,8 +511,10 @@ public class Janela4Manual extends javax.swing.JFrame {
     }//GEN-LAST:event_sliderPassoStateChanged
 
     private void btnFinalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarActionPerformed
-        if (this.btnFinalizar.getText().equalsIgnoreCase("Sair")){
+        if (this.btnFinalizar.getText().equalsIgnoreCase("Próximo")){
             this.dispose();
+            JanelaFinalArq jf = new JanelaFinalArq();
+            jf.setVisible(true);
         }
         if (this.tipo == 0){
             ArrayList<ArrayList<Processo>> lista = escalonadorFCFS.executar(-1);
@@ -503,10 +523,10 @@ public class Janela4Manual extends javax.swing.JFrame {
             ArrayList<Processo> listaExecutados = lista.get(2);
             if (processoAtual.size() == 2){
                 this.atualizarDados(listaEspera, processoAtual, listaExecutados);
-            } else if (!this.btnFinalizar.getText().equalsIgnoreCase("Sair")){
+            } else if (!this.btnFinalizar.getText().equalsIgnoreCase("Próximo")){
                 this.atualizarDados(listaEspera, processoAtual, listaExecutados);
-                JOptionPane.showMessageDialog(this, "Processo Finalizado!!");
-                this.btnFinalizar.setText("Sair");
+                JOptionPane.showMessageDialog(this, "Processos Finalizados!!");
+                this.btnFinalizar.setText("Próximo");
             }
         } else if (this.tipo == 1){
             ArrayList<ArrayList<Processo>> lista = escalonadorRR.executar(-1);
@@ -517,10 +537,10 @@ public class Janela4Manual extends javax.swing.JFrame {
             System.out.println("Tamanho proceesso atual: " + processoAtual.size());
             if (processoAtual.size() == 2){
                 this.atualizarDados(listaEspera, processoAtual, listaExecutados);
-            } else if (!this.btnFinalizar.getText().equalsIgnoreCase("Sair")){
+            } else if (!this.btnFinalizar.getText().equalsIgnoreCase("Próximo")){
                 this.atualizarDados(listaEspera, processoAtual, listaExecutados);
-                JOptionPane.showMessageDialog(this, "Processo Finalizado!!");
-                this.btnFinalizar.setText("Sair");
+                JOptionPane.showMessageDialog(this, "Processos Finalizados!!");
+                this.btnFinalizar.setText("Próximo");
             }
         }
         

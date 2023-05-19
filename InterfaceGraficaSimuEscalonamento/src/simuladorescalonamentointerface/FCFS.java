@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class FCFS {
+    //Variaveis de instancia
     private ManipuladorArquivosTXT manipulador;
     private String path;
     int tempoTotM;
@@ -11,12 +12,13 @@ public class FCFS {
     int passoAux;
     int qtdeProcessos;
     ArrayList<Processo> listaEsperaM;
-    Processo processoAtualM;
     ArrayList<Processo> executadosM;
     ArrayList<Processo> processosM;
+    Processo processoAtualM;
     Processo processoAux;
     private String linhaTempo = "";
     
+    //Execução caso seja arquivo 
     public FCFS(ArrayList<Processo> processos, String path) throws IOException{
         this.setPath(path);
         int tempoTot = 0;
@@ -31,7 +33,10 @@ public class FCFS {
             qtdeProcessos++;
         }
         
+        //Executa enquando o tempo for menor que o tempo total dos processos
         while (tempo <= tempoTot){
+            //Verifica se o processoAtual é um processo vazio / adiciona processos 
+            // na lista de espera
             for (int i = 0; i < qtdeProcessos; i++){
                 if(!processos.isEmpty()){
                     if(tempo == processos.get(0).getChegada()){
@@ -47,6 +52,7 @@ public class FCFS {
                     }
                 }
             }
+            //Quando um processo termina de ser executado 
             if (processoAtual.getTempoAux() == 0){
                 processoAtual.setTempoResposta(tempo - processoAtual.getChegada());
                 processoAtual.setTempoFinal(tempo);
@@ -60,14 +66,14 @@ public class FCFS {
                     listaEspera.remove(0);
                 }
             }
+            //Decremento do tempo de execução do processo atual e encremento do tempo do while
             processoAtual.setTempoAux(processoAtual.getTempoAux() - 1);
             tempo++;
         }
-        
         this.imprimir(this.setTempoMedioResposta(executados), this.setTempoMedioEspera(executados), executados);
     }
     
-    
+    //Construtor p/ entrada manual
     public FCFS(ArrayList<Processo> processos){
         tempoTotM = 0;
         tempoM = 0;
@@ -84,7 +90,7 @@ public class FCFS {
         processoAux = new Processo();
     }
     
-    
+    //Método execução caso seja entrada manual
     public ArrayList<ArrayList<Processo>> executar(int passo){
         ArrayList<ArrayList<Processo>> retorno = new ArrayList<>();
         ArrayList<Processo> pAtual = new ArrayList<>();
@@ -144,6 +150,7 @@ public class FCFS {
         return retorno;
     }
     
+    //Calcula o tempo medio geral (TME E TMR) e armazena
     private float setTempoMedioResposta(ArrayList<Processo> executados){
         float tmr = 0;
         
@@ -160,6 +167,7 @@ public class FCFS {
         }
         return tmr / executados.size();
     }
+    
     private String getPath() {
         return path;
     }
@@ -189,57 +197,48 @@ public class FCFS {
         
         linhas.add("Processos na Fila do First Come First Served:\n");
         for (Processo processo : executados){
-            //System.out.print("\t" + processo.getProcesso());
             linha = linha + "  " + processo.getProcesso();
         }
         linhas.add(linha);
         linha = "";
         linhas.add("\n\nTempo de CPU requerida pelos processos:\n");
         for (Processo processo : executados){
-            //System.out.print("\t" + processo.getTempo());
             linha = linha + "\t" + processo.getTempo();
         }
         linhas.add(linha);
         linha = "";
         linhas.add("\n\nTempo de Chegada dos processos:\n");
         for (Processo processo : executados){
-            //System.out.print("\t" + processo.getChegada());
             linha = linha + "\t" + processo.getChegada();
         }
         linhas.add(linha);
         linha = "";
         linhas.add("\n\nLINHA DO TEMPO\n[0]");
         for (Processo processo : executados){
-            //System.out.printf("-----%s-----[%d]", processo.getProcesso(), 
-              //      processo.getTempoFinal());
             linha = linha + "-----" + processo.getProcesso() + "-----[" + processo.getTempoFinal() + "]";
         }
         linhas.add(linha);
         linha = "";
         linhas.add("\n\nTempo de Espera de cada processo:\n");
         for (Processo processo : executados){
-            //System.out.print("\t" + processo.getProcesso());
             linha = linha + "\t" + processo.getProcesso();
         }
         linha = linha + "\n";
         linhas.add(linha);
         linha = "";
         for (Processo processo : executados){
-            //System.out.print("\t" + processo.getTempoEspera());
             linha = linha + "\t" + processo.getTempoEspera();
         }
         linhas.add(linha);
         linha = "";
         linhas.add("\n\nTempo de Resposta de cada processo:\n");
         for (Processo processo : executados){
-            //System.out.print("\t" + processo.getProcesso());
             linha = linha + "\t" + processo.getProcesso();
         }
         linha = linha + "\n";
         linhas.add(linha);
         linha = "";
         for (Processo processo : executados){
-            //System.out.print("\t" + processo.getTempoResposta());
             linha = linha + "\t" + processo.getTempoResposta();
         }
         linhas.add(linha);

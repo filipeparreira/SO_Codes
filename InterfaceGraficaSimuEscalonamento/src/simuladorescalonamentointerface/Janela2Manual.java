@@ -7,16 +7,13 @@ import javax.swing.JSpinner.DefaultEditor;
  *
  * @author filipe
  */
+
+//Janela que indica a quantidade de processos que vai ser trabalhado 
 public class Janela2Manual extends javax.swing.JFrame {
     private int tipo;
     private int quantum;
     public Janela2Manual(){
         initComponents();
-        JComponent editor = this.txtQtdeProc.getEditor();
-        if (editor instanceof DefaultEditor defaultEditor) {
-            defaultEditor.getTextField().setEditable(false);
-        }
-        this.painelP.setBackground(java.awt.SystemColor.window);
     }
     public Janela2Manual(int tipo) {
         initComponents();
@@ -136,9 +133,6 @@ public class Janela2Manual extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnProxActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
