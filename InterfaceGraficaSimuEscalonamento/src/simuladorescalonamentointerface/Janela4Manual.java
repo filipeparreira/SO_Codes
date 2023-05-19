@@ -12,6 +12,7 @@ import javax.swing.table.TableColumn;
 public class Janela4Manual extends javax.swing.JFrame {
     private ArrayList<Processo> listaProcessos;
     private int tipo; 
+    private int qtdeProcessos;
     private int tempoTotal;
     private int tempoAtual;
     private int passo;
@@ -22,20 +23,30 @@ public class Janela4Manual extends javax.swing.JFrame {
     public Janela4Manual() {
         initComponents();
         painelP.setBackground(java.awt.SystemColor.window);
+        qtdeProcessos = 0;
         this.alinharTabela();
         this.tempoTotal = 0;
         ArrayList<Processo> listaProc = new ArrayList<>();
         listaProc.add(new Processo("A", 12, 5, 0));
         listaProc.add(new Processo("B", 15, 20, 0));
-        listaProc.add(new Processo("C", 17, 10, 0));
+        listaProc.add(new Processo("C", 17, 19, 0));
         escalonadorFCFS = new FCFS(listaProc);
         this.sliderPasso.setValue(1);
+        Comparator<Processo> comparador = (Processo p1, Processo p2) -> Integer.compare(p1.getChegada(), p2.getChegada());
+        Collections.sort(listaProc, comparador);
         Processo primeiroProcesso = listaProc.get(0);
-        this.tabelaExecucao.setValueAt(primeiroProcesso.getProcesso(), 0, 0);
-        this.tabelaExecucao.setValueAt(primeiroProcesso.getTempoAux(), 0, 1);
-        this.tabelaExecucao.setValueAt(primeiroProcesso.getChegada(), 0, 2);
+        if (primeiroProcesso.getChegada()>0){
+            this.tabelaExecucao.setValueAt("", 0, 0);
+            this.tabelaExecucao.setValueAt("", 0, 1);
+            this.tabelaExecucao.setValueAt("", 0, 2);
+        } else{
+            this.tabelaExecucao.setValueAt(primeiroProcesso.getProcesso(), 0, 0);
+            this.tabelaExecucao.setValueAt(primeiroProcesso.getTempoAux(), 0, 1);
+            this.tabelaExecucao.setValueAt(primeiroProcesso.getChegada(), 0, 2);
+        }            
         for (int i = 0; i < listaProc.size(); i++){
             Processo p = listaProc.get(i);
+            qtdeProcessos++;
             this.tabelaProcessos.setValueAt(p.getProcesso(), i, 0);
             this.tabelaProcessos.setValueAt(p.getTempoAux(), i, 1);
             this.tabelaProcessos.setValueAt(p.getChegada(), i, 2);
@@ -466,14 +477,13 @@ public class Janela4Manual extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPaPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPaPActionPerformed
-        
         if (this.tipo == 0){
             ArrayList<ArrayList<Processo>> lista = escalonadorFCFS.executar(this.passo);
             //Lista espera --> 1 | Executados -> 2 | Processos -> 0 | Processo Atual -> 3 | Linha Tempo -> 4
             ArrayList<Processo> processoAtual = lista.get(3);
             ArrayList<Processo> listaEspera = lista.get(1);
             ArrayList<Processo> listaExecutados = lista.get(2);
-            if (processoAtual.size() == 2  || this.tempoAtual < this.tempoTotal){
+            if (listaExecutados.size() < this.qtdeProcessos){
                 this.atualizarDados(listaEspera, processoAtual, listaExecutados);
             } else {
                 this.atualizarDados(listaEspera, processoAtual, listaExecutados);
@@ -512,7 +522,7 @@ public class Janela4Manual extends javax.swing.JFrame {
             ArrayList<Processo> processoAtual = lista.get(3);
             ArrayList<Processo> listaEspera = lista.get(1);
             ArrayList<Processo> listaExecutados = lista.get(2);
-            if (processoAtual.size() == 2){
+            if (listaExecutados.size() < this.qtdeProcessos){
                 this.atualizarDados(listaEspera, processoAtual, listaExecutados);
             } else if (!this.btnFinalizar.getText().equalsIgnoreCase("Sair")){
                 this.atualizarDados(listaEspera, processoAtual, listaExecutados);
@@ -603,12 +613,15 @@ public class Janela4Manual extends javax.swing.JFrame {
             this.tabelaExecucao.setValueAt(execucao, count, 1);
             String chegada = Integer.toString(processoExec.getChegada());
             this.tabelaExecucao.setValueAt(chegada, count, 2);
-            this.lblTempo.setText(Integer.toString(tempoM.getTempo()));
-        } else if (processoAtual.size() == 1   || this.tempoAtual < this.tempoTotal){
-            this.lblTempo.setText(Integer.toString(tempoM.getTempoAux()));
+            //this.lblTempo.setText(Integer.toString(tempoM.getTempo()));
+        } else if (this.tempoAtual < this.tempoTotal){
+            //this.lblTempo.setText(Integer.toString(tempoM.getTempoAux()));
             this.tabelaExecucao.setValueAt("", 0, 0);
             this.tabelaExecucao.setValueAt("", 0, 1);
             this.tabelaExecucao.setValueAt("", 0, 2);
+            
+        }
+        if (listaExecutados.size() >= this.qtdeProcessos){
             String tmr = Float.toString(tempoM.getTmr());
             int ponto = tmr.indexOf(".");
             tmr = tmr.substring(0, ponto+2);
@@ -617,9 +630,15 @@ public class Janela4Manual extends javax.swing.JFrame {
             ponto = tme.indexOf(".");
             tme = tme.substring(0, ponto+2);
             this.lblTME.setText(tme);
+            this.lblTempo.setText(Integer.toString(this.tempoAtual-1));
+            for (Processo p : listaExecutados){
+                System.out.println("Processo " + p.getProcesso() + ": Chegada: " + p.getTempoComeco() + " Tempo Final: " + p.getTempoFinal());
+            }
+        } else{
+            this.lblTempo.setText(Integer.toString(this.tempoAtual));
         }
         this.txtLinhaTempo.setText(tempoM.getProcesso());
-            
+        
     }
 
 

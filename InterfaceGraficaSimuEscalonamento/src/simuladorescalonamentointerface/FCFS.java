@@ -14,6 +14,7 @@ public class FCFS {
     Processo processoAtualM;
     ArrayList<Processo> executadosM;
     ArrayList<Processo> processosM;
+    ArrayList<Processo> listaAux;
     Processo processoAux;
     private String linhaTempo = "";
     
@@ -77,6 +78,7 @@ public class FCFS {
         processoAtualM = new Processo();
         executadosM = new ArrayList<>();  
         processosM = processos;
+        listaAux = processos;
         qtdeProcessos = 0;
         for (Processo p : processosM){
             tempoTotM += p.getTempo();
@@ -90,7 +92,8 @@ public class FCFS {
     public ArrayList<ArrayList<Processo>> executar(int passo){
         ArrayList<ArrayList<Processo>> retorno = new ArrayList<>();
         ArrayList<Processo> pAtual = new ArrayList<>();
-        while (tempoM <= tempoTotM){
+        //while (tempoM <= tempoTotM){
+        while (this.executadosM.size() != this.qtdeProcessos){
             for (int i = 0; i<qtdeProcessos; i++){
                 if(!processosM.isEmpty()){
                     if(tempoM == processosM.get(0).getChegada()){
@@ -122,7 +125,6 @@ public class FCFS {
                     }
                 }
             }
-            
             processoAtualM.setTempoAux(processoAtualM.getTempoAux() - 1);
             tempoM++;
             passoAux++;
@@ -136,7 +138,7 @@ public class FCFS {
         processoAux.setTempoAux(tempoTotM);
         processoAux.setTme(this.setTempoMedioEspera(executadosM));
         processoAux.setTmr(this.setTempoMedioResposta(executadosM));
-        processoAux.setProcesso("[0]" + this.linhaTempo);
+        processoAux.setProcesso(this.linhaTempo);
         pAtual.add(processoAux);
         /*if(processoAtualM.getTempoAux() != -1){
             pAtual.add(processoAtualM);
@@ -148,7 +150,7 @@ public class FCFS {
         } else {
             pAtual.add(processoAtualM);
         }
-        retorno.add(processosM);
+        retorno.add(listaAux);
         retorno.add(listaEsperaM);
         retorno.add(executadosM);
         retorno.add(pAtual);
@@ -164,12 +166,12 @@ public class FCFS {
         return tmr / executados.size();
     }
     private float setTempoMedioEspera(ArrayList<Processo> executados){
-        float tmr = 0;
+        float tme = 0;
         
         for (Processo p : executados){
-            tmr +=  p.getTempoEspera();
+            tme +=  p.getTempoEspera();
         }
-        return tmr / executados.size();
+        return tme / executados.size();
     }
     private String getPath() {
         return path;
@@ -190,7 +192,8 @@ public class FCFS {
         for (int i = 0; i < 4; i++){
             tracos = tracos + "-";
         }
-        linha = linha + tracos + "[" + processoAtual.getProcesso() + "]" + tracos + "[" + tempo + "]";
+        linha = linha + "[" + (tempo - processoAtual.getTempo()) + "]" + tracos + "[" + processoAtual.getProcesso() +
+                "]" + tracos + "[" + tempo + "]";
         this.setLinhaTempo(linha);
     }
     
