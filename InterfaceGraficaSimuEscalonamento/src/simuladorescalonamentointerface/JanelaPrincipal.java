@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package simuladorescalonamentointerface;
 
 import java.io.File;
@@ -15,17 +11,12 @@ import javax.swing.event.ChangeListener;
  * @author filipe
  */
 public class JanelaPrincipal extends javax.swing.JFrame {
-
-    /**
-     * Creates new form JanelaPrincipal
-     */
     private int quantum;
     private int tipo;
-    
-            
-            
+
     public JanelaPrincipal() {
         initComponents();
+        //Inicialização da janela 
         painelArquivo.setVisible(false);
         painelQuantum.setVisible(false);
         painel1.setBackground(java.awt.SystemColor.window);
@@ -33,6 +24,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         this.painelArquivo.setBackground(java.awt.SystemColor.window);
         this.painelQuantum.setBackground(java.awt.SystemColor.window);
         
+        //Deixando o botão próximo desabilitado até que duas opções sejam selecionadas 
         ChangeListener cl = (ChangeEvent e) -> {
             if (buttonGroup1.getSelection() != null && buttonGroup2.getSelection() != null){
                 btnProx.setEnabled(true);
@@ -40,7 +32,6 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                 btnProx.setEnabled(false);
             }
         };
-        
         this.radioArquivoOP.addChangeListener(cl);
         this.radioFCFS.addChangeListener(cl);
         this.radioManualOP.addChangeListener(cl);
@@ -229,7 +220,7 @@ public class JanelaPrincipal extends javax.swing.JFrame {
                             .addGroup(painel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 320, Short.MAX_VALUE)
                         .addGroup(painel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(radioFCFS)
                             .addComponent(jLabel2)
@@ -287,17 +278,14 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void radioArquivoOPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioArquivoOPActionPerformed
-       // TODO add your handling code here:
        this.painelArquivo.setVisible(true);
     }//GEN-LAST:event_radioArquivoOPActionPerformed
 
     private void radioManualOPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioManualOPActionPerformed
-        // TODO add your handling code here:
         this.painelArquivo.setVisible(false);
     }//GEN-LAST:event_radioManualOPActionPerformed
 
     private void btnProcurarArquivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProcurarArquivoActionPerformed
-        // TODO add your handling code here:
         JFileChooser fc = new JFileChooser();
         fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
         int resultado = fc.showOpenDialog(null);
@@ -347,9 +335,6 @@ public class JanelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnProxActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

@@ -16,10 +16,12 @@ public class Janela2Arq extends javax.swing.JFrame {
     private String pathEntrada;
     private String pathSaida;
     private int tipo; //1 - RR 0 - FCFS
+    
     public Janela2Arq(){
         initComponents();
-        painelP.setBackground(java.awt.SystemColor.window);
     }
+    
+    //Caso seja FCFS
     public Janela2Arq(String pathEntrada, int tipo){
         initComponents();
         if(tipo == 0){
@@ -31,6 +33,7 @@ public class Janela2Arq extends javax.swing.JFrame {
         this.pathEntrada = pathEntrada;
         painelP.setBackground(java.awt.SystemColor.window);
     }
+    //Caso seja RR
     public Janela2Arq(String pathEntrada, int tipo, int quantum){
         initComponents();
         tituloLbl.setText("Método Round-Robin");
@@ -162,7 +165,9 @@ public class Janela2Arq extends javax.swing.JFrame {
         }
         this.pathSaida = txtPath.getText();
     }//GEN-LAST:event_btnProcurarActionPerformed
-
+    
+    //Ao apertar o botão próximo ele identifica e executa o algoritmo escolhido 
+    //  e salva na pasta de destino
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         ArrayList<String> linhasArq = new ArrayList<>();
         if(this.tipo == 0){
@@ -205,10 +210,12 @@ public class Janela2Arq extends javax.swing.JFrame {
                 }
             }
         }
+        
         //Armazenando as informações dentro de processo
         for (int i = 0; i < tamanho - 1; i++){
             listaProcessos.add(new Processo(processos[i], tempos[i], chegada[i], prioridade[i]));
         }
+        
         //Ordenando a lista de processos por chegada
         Comparator<Processo> comparador = (Processo p1, Processo p2) -> Integer.compare(p1.getChegada(), p2.getChegada());
         Collections.sort(listaProcessos, comparador);
