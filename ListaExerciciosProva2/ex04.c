@@ -13,28 +13,36 @@
 const int REP = 5;
 char dado;
 key_t key;
-int shmid,flagsid;
+int shmid,flagsid, countid;
 char *data;
 int  *flags;
+int *counter;
+
 
 int producer(int n)
 {
     printf("Producer was born!\n");
  
-    for(int i = 0; i < REP; i++) {        
+    //for(int i = 0; i < REP; i++) {        
     
-    flags[0] = 1;
+    //flags[0] = 1;
            
-    while(flags[1] && (flags[3] == 1));
-    
-    data[i] = (char) i + 0x61;   
-    printf("Stored... %c \n", data[i]);
-    
-    flags[3] = 1;
-    
-    flags[0] = 0;
-    
+    //while(flags[1] && (flags[3] == 1));
+    int in = 0;
+    while (1)
+    {
+        while(counter[0] == n);
+        data[in] = (char) in + 0x61;   
+        printf("Stored... %c \n", data[in]);
+        in = ++in % n;
+        counter[0]++;
     }
+    
+    //flags[3] = 1;
+    
+    //flags[0] = 0;
+    
+    //}
        
     return n;
 }
@@ -44,25 +52,31 @@ int consumer(int n)
     printf("Consumer was born!\n");
  
     
-    for(int i = 0; i < REP; i++) {
+    //for(int i = 0; i < REP; i++) {
     
-     flags[1] = 1;
+    //flags[1] = 1;
     
-    while(flags[0] && (flags[3] == 0));
+    //while(flags[0] && (flags[3] == 0));
+    int out = 0;
+    while(1){
+        while(counter[0] == 0);
+        dado = data[out];
+        
+        data[out] = ' '; 
+        
+        printf("Consumed... %c \n", dado);
+        out = ++out % n;
+        counter[0]--;
+    }
     
-     dado = data[i];
     
-    data[i] = ' '; 
+    //flags[3] = 0;
     
-    printf("Consumed... %c \n", dado);
-    
-    flags[3] = 0;
-    
-    flags[1] = 0;
+    //flags[1] = 0;
     
     
         
-    }
+    //}
  
     return n;
 }
@@ -83,14 +97,18 @@ int main()
     flags = (malloc(3*sizeof(int)));               //     2
     flags = shmat(flagsid, (void *)0, 0);          //  
     
+    key = ftok("/bin", 'C');
+    countid = shmget(key, 1024, 0644 | IPC_CREAT);
+    counter = (malloc(1*sizeof(int)));
+    counter = shmat(countid, (void *)0, 0);
+
+
     flags[0] = 1;
     flags[1] = 0;
     flags[3] = 0;
       
     int pid = fork();
-      
-       
-      
+          
     if(pid == 0){
         producer(5);       
     }else{
@@ -101,10 +119,10 @@ int main()
             shmctl(shmid, IPC_RMID, NULL);            //
            
             shmdt(flags);                             //segmento 4
-            shmctl(flagsid, IPC_RMID, NULL);        //
-           
-           
-                      
+            shmctl(flagsid, IPC_RMID, NULL);        //           
+
+            shmdt(counter);
+            shmctl(countid, IPC_RMID, NULL);       
     }   
     
         
