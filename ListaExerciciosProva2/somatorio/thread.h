@@ -8,8 +8,8 @@ class Thread
 {
 public:
     Thread(int ( * const entry)(int), int arg) {
-    if(pthread_create(&thread, 0, (void*(*)(void*))entry, (void *)arg))
-        thread = 0;
+	if(pthread_create(&thread, 0, (void*(*)(void*))entry, (void *)arg))
+	    thread = 0;
     }
     ~Thread() {}
  
